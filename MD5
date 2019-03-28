@@ -1,6 +1,6 @@
-297492fce8373add40e04be8fd31a4d4 *DESCRIPTION
+d293d4cb391a519a28e49b5b8fa985b7 *DESCRIPTION
 433e05f51b808f2bc80e07d0fe4d3b9b *NAMESPACE
-52321a3932713e3a03821745d4aa3a4b *NEWS.md
+7e7a7afefdf3de5f55beb7cb4393bff4 *NEWS.md
 48f06cf828a587a685ebb98dbdf9023d *R/analyze_nl.R
 2d30259d201a23a2176d5a415e84c360 *R/class_constr.R
 dd6fbd412574749a790dc2440653ab50 *R/class_init.R
@@ -10,7 +10,7 @@ be728e3d93437b670d4ff2484d5c01d0 *R/export_nl.R
 ad249027a137f55e794849af15e19d24 *R/import_nl.R
 734bfb24e6c4d87971c0bc65d0af4edb *R/nl_to_graph.R
 55ecced7e00769ff8308010a14541e6c *R/nl_to_points.R
-facb1ec57a09d821fcbbdc6c06c64d45 *R/nl_to_raster.R
+4faeba1531f59e9d5749dedfd84eab31 *R/nl_to_raster.R
 bed1218ae874af4ddf9b818bb10229e1 *R/nldoc.R
 e6c4f7822a2494f4bcddd3015217af76 *R/nldoc_find_procedure_calls.R
 22db3ff5e7ae2bdbbdf9f56d2124bd60 *R/nldoc_network.R
@@ -30,8 +30,8 @@ e10a92a4cf7f629cf54ac8fb2e706302 *R/util_runnl_dyn.R
 a71b595d3ace6f78fb62b4cf78fcc85f *R/util_stuff.R
 ad3f3c64fcdb96e66b1859bd35c48478 *R/utils-pipe.R
 6069a0650942b2984b375fc7a997ac15 *R/zzz.R
-ea97ffad3f65f7d83aef4c01945b0a26 *README.md
-909bdb3a747d06c4883f47a9a9d0d8f4 *build/vignette.rds
+e3c29a6ceb484b7eb2fe523d314c1a7f *README.md
+11fe802407ba32a547df8dcbb15399b4 *build/vignette.rds
 bce3e41964965390c581c69b0f90ec19 *data/nl_distinct.rda
 6e5ebd06fd7abbd275e3535dbe8f6ca6 *data/nl_eFast.rda
 faff743e58cf8c3d8dafe1c81b5a6d84 *data/nl_ff.rda
@@ -44,13 +44,13 @@ abb58313fbd1393c7bc597b2280a829a *data/nl_sobol2007.rda
 815057dbe7ca6700e7bf1217bfc77469 *data/nl_spatial.rda
 ae670ebf4e214016e7bd73e4cc7a29ef *inst/doc/furthernotes.R
 7d12934e13db2d9923b27cc7c691101c *inst/doc/furthernotes.Rmd
-7de8b301bfcb9d782177fc276f803719 *inst/doc/furthernotes.html
+f83b91293468d72ece8440abdc939fbc *inst/doc/furthernotes.html
 a379c830620a27b477f9cd2d83634188 *inst/doc/getstarted.R
-62b51c0b9b4c76fa4e4ae774e3aec866 *inst/doc/getstarted.Rmd
-ad381ca69910e70427888d6bf4ef56e9 *inst/doc/getstarted.html
+0030c62789a5c2b476e0b24610756919 *inst/doc/getstarted.Rmd
+e3d4ebf1c1f3244c5945024595d4f9f8 *inst/doc/getstarted.html
 193ab9a0795869a91154d9b091e60139 *inst/doc/simdesign-examples.R
 ad77e608c3e8b8dc1dc8654ff24d1fe0 *inst/doc/simdesign-examples.Rmd
-42f3e2c8862079bebca181626e279b1c *inst/doc/simdesign-examples.html
+d019e146978b3fd750c98189bc760577 *inst/doc/simdesign-examples.html
 7786df48bf1c805d26d0cd6089956004 *man/analyze_eFast.Rd
 587906fb55d877ba201d27358adf1589 *man/analyze_ff.Rd
 ae0a1e9db09567768bb1fc447c0ba6d0 *man/analyze_lhs.Rd
@@ -152,5 +152,5 @@ e490e79b3ec5069e5af28519d09d9da2 *tests/testthat/test_unnest_simoutput.R
 ab7d8e5db02cb9d8edfa4c7c46320609 *tests/testthat/test_util_runnl.R
 af0cfaf1a04bdbd71781470499a3800a *tests/testthat/test_util_stuff.R
 7d12934e13db2d9923b27cc7c691101c *vignettes/furthernotes.Rmd
-62b51c0b9b4c76fa4e4ae774e3aec866 *vignettes/getstarted.Rmd
+0030c62789a5c2b476e0b24610756919 *vignettes/getstarted.Rmd
 ad77e608c3e8b8dc1dc8654ff24d1fe0 *vignettes/simdesign-examples.Rmd
