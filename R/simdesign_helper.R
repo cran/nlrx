@@ -32,10 +32,9 @@
 simdesign_simple <- function(nl, nseeds) {
 
   util_eval_experiment(nl)
-  util_eval_constants(nl)
   message("Creating simple simulation design")
   # This doesnt use variables but only constants to create a simdesign:
-  simple <- tibble::as.tibble(getexp(nl, "constants"))
+  simple <- tibble::as_tibble(getexp(nl, "constants"))
   seeds <- util_generate_seeds(nseeds = nseeds)
 
   new_simdesign <- simdesign(simmethod="simple",
@@ -86,7 +85,6 @@ simdesign_simple <- function(nl, nseeds) {
 simdesign_distinct <- function(nl, nseeds) {
 
   util_eval_experiment(nl)
-  util_eval_constants(nl)
   util_eval_variables_distinct(nl)
   message("Creating distinct simulation design")
 
@@ -99,12 +97,12 @@ simdesign_distinct <- function(nl, nseeds) {
 
   })
 
-  ff <- tibble::as.tibble(ff)
+  ff <- tibble::as_tibble(ff)
 
   ## Bind constants if any:
   if(length(getexp(nl, "constants")) > 0)
   {
-    ff <- tibble::as.tibble(cbind(ff, getexp(nl, "constants"), stringsAsFactors=FALSE))
+    ff <- tibble::as_tibble(cbind(ff, getexp(nl, "constants"), stringsAsFactors=FALSE))
   }
 
   ## Generate seeds
@@ -176,12 +174,12 @@ simdesign_ff <- function(nl, nseeds) {
     }
   })
 
-  ff <- tibble::as.tibble(expand.grid(ff, stringsAsFactors = FALSE))
+  ff <- tibble::as_tibble(expand.grid(ff, stringsAsFactors = FALSE))
 
   ## Bind constants if any:
   if(length(getexp(nl, "constants")) > 0)
   {
-    ff <- tibble::as.tibble(cbind(ff, getexp(nl, "constants"), stringsAsFactors=FALSE))
+    ff <- tibble::as_tibble(cbind(ff, getexp(nl, "constants"), stringsAsFactors=FALSE))
   }
 
   ## Generate seeds
@@ -247,7 +245,7 @@ simdesign_lhs <- function(nl, samples, nseeds, precision) {
   }
 
   ## Convert to tibble:
-  lhs <- tibble::as.tibble(lhs)
+  lhs <- tibble::as_tibble(lhs)
 
   ## Generate seeds
   seeds <- util_generate_seeds(nseeds = nseeds)
@@ -340,7 +338,7 @@ simdesign_sobol <- function(nl,
     soX <- cbind(soX, getexp(nl, "constants"), stringsAsFactors=FALSE)
   }
   ## Convert to tibble
-  soX <- tibble::as.tibble(soX)
+  soX <- tibble::as_tibble(soX)
 
   ## Generate seeds
   seeds <- util_generate_seeds(nseeds=nseeds)
@@ -350,6 +348,9 @@ simdesign_sobol <- function(nl,
                              siminput=soX,
                              simobject=list(so),
                              simseeds=seeds)
+
+  ## Check if the simdesign contains NAs
+  .util_check_siminput_tibble(nl, new_simdesign)
 
   return(new_simdesign)
 }
@@ -431,7 +432,7 @@ simdesign_sobol2007 <- function(nl,
   }
 
   ## Convert to tibble
-  soX <- tibble::as.tibble(soX)
+  soX <- tibble::as_tibble(soX)
 
   ## Generate seeds
   seeds <- util_generate_seeds(nseeds=nseeds)
@@ -441,6 +442,9 @@ simdesign_sobol2007 <- function(nl,
                              siminput=soX,
                              simobject=list(so),
                              simseeds=seeds)
+
+  ## Check if the simdesign contains NAs
+  .util_check_siminput_tibble(nl, new_simdesign)
 
   return(new_simdesign)
 }
@@ -523,7 +527,7 @@ simdesign_soboljansen <- function(nl,
   }
 
   ## Convert to tibble
-  soX <- tibble::as.tibble(soX)
+  soX <- tibble::as_tibble(soX)
 
   ## Generate seeds
   seeds <- util_generate_seeds(nseeds=nseeds)
@@ -533,6 +537,9 @@ simdesign_soboljansen <- function(nl,
                              siminput=soX,
                              simobject=list(so),
                              simseeds=seeds)
+
+  ## Check if the simdesign contains NAs
+  .util_check_siminput_tibble(nl, new_simdesign)
 
   return(new_simdesign)
 }
@@ -591,6 +598,11 @@ simdesign_morris <- function(nl,
   util_eval_experiment(nl)
   util_eval_variables(nl)
   util_eval_variables_sa(nl)
+
+  if (morrisgridjump > morrislevels)
+  {
+    warning("morrisgridjump should be lower than morrislevels. Morris recommendation is to use (morrislevels / 2) for the gridjump value. The parameter matrix might be invalid. Please adjust and attach the simdesign again.")
+  }
   message("Creating morris simulation design")
 
   morrisdesign <- list(type = morristype,
@@ -611,7 +623,7 @@ simdesign_morris <- function(nl,
                             scale=TRUE)
 
   # Export parameter matrix:
-  moX <- tibble::as.tibble(mo$X)
+  moX <- tibble::as_tibble(mo$X)
 
   ## Bind constants if any:
   if(length(getexp(nl, "constants")) > 0)
@@ -620,7 +632,7 @@ simdesign_morris <- function(nl,
   }
 
   ## Convert to tibble
-  moX <- tibble::as.tibble(moX)
+  moX <- tibble::as_tibble(moX)
 
   ## Generate seeds
   seeds <- util_generate_seeds(nseeds)
@@ -630,6 +642,9 @@ simdesign_morris <- function(nl,
                              siminput=moX,
                              simobject=list(mo),
                              simseeds=seeds)
+
+  ## Check if the simdesign contains NAs
+  .util_check_siminput_tibble(nl, new_simdesign)
 
   return(new_simdesign)
 
@@ -698,7 +713,7 @@ simdesign_eFast <- function(nl,
                              q.arg = q.args)
 
   # Export parameter matrix:
-  f99X <- tibble::as.tibble(f99$X)
+  f99X <- tibble::as_tibble(f99$X)
 
   ## Bind constants if any:
   if(length(getexp(nl, "constants")) > 0)
@@ -707,7 +722,7 @@ simdesign_eFast <- function(nl,
   }
 
   ## Convert to tibble
-  f99X <- tibble::as.tibble(f99X)
+  f99X <- tibble::as_tibble(f99X)
 
   ## Generate seeds
   seeds <- util_generate_seeds(nseeds)
@@ -717,6 +732,9 @@ simdesign_eFast <- function(nl,
                              siminput=f99X,
                              simobject=list(f99),
                              simseeds=seeds)
+
+  ## Check if the simdesign contains NAs
+  .util_check_siminput_tibble(nl, new_simdesign)
 
   return(new_simdesign)
 
@@ -731,7 +749,7 @@ simdesign_eFast <- function(nl,
 #'
 #' @param nl nl object with a defined experiment
 #' @param par optional vector of start values for each parameter defined in variables of experiment
-#' @param evalcrit position of evaluation criterion within defined NetLogo metrics of nl experiment
+#' @param evalcrit position of evaluation criterion within defined NetLogo metrics of nl experiment or a function that reports a single numeric value
 #' @param control list with further arguments passed to the GenSA function (see ?GenSA for details)
 #' @param nseeds number of seeds for this simulation design
 #' @return simdesign S4 class object
@@ -743,9 +761,16 @@ simdesign_eFast <- function(nl,
 #'
 #' The GenSA simdesign generates a simulated Annealing experiment within the defined min and max parameter boundaries
 #' that are defined in the variables field of the experiment object within the nl object.
+#'
 #' The evalcrit reporter defines the evaluation criterion for the simulated annealing procedure.
-#' The reporter is defined within the experiment metrics vector.
-#' For the simulated annealing function we only refer to the position of the reporter that we want to use for evaluation.
+#' There are two options to evaluate the fitness value of each iteration of the algorithm:
+#' 1. Use a reporter that is defined within the experiment metrics vector.
+#' You can just enter the position of that metric within the experiment metrics vector (e.g. 1 would use the first defined metric of the experiment to evaluate each iteration).
+#' The algorithm automatically calculates the mean value of this reporter if evalticks is defined to measure multiple ticks during each simulation.
+#' You can define a function that post-processes NetLogo output to calculate an evaluation value. This function must accept the nl object as input and return one single numeric value.
+#' The nl object that is then provided to the evaluation function will have results of the current iteration attached. The results can be accessed via the simoutput slot of the simdesign.
+#' You can pass this function to evalcrit. It is then applied to the output of each iteration.
+#'
 #' The function uses the GenSA package to set up a Simulated Annealing function.
 #' For details on the GenSA function parameters see ?GenSA
 #' Finally, the function reports a simdesign object.
@@ -761,9 +786,27 @@ simdesign_eFast <- function(nl,
 #' # For this example, we load a nl object from test data.
 #'
 #' nl <- nl_lhs
+#'
+#' # Example 1: Using a metric from the experiment metrics vector for evaluation:
 #' nl@@simdesign <- simdesign_GenSA(nl=nl,
 #'                                  par=NULL,
 #'                                  evalcrit=1,
+#'                                  control=list(max.time = 600),
+#'                                  nseeds=1)
+#'
+#'
+#' # Example 2: Using a self-defined evaluation function
+#' # For demonstration we define a simple function that calculates
+#' # the maximum value of count sheep output.
+#' critfun <- function(nl) {
+#' results <- nl@@simdesign@@simoutput
+#' crit <- as.integer(max(results$`count sheep`))
+#' return(crit)
+#' }
+#'
+#' nl@@simdesign <- simdesign_GenSA(nl=nl,
+#'                                  par=NULL,
+#'                                  evalcrit=critfun,
 #'                                  control=list(max.time = 600),
 #'                                  nseeds=1)
 #'
@@ -789,10 +832,15 @@ simdesign_GenSA <- function(nl,
   lower <- unlist(lapply(getexp(nl, "variables"), "[", "min"))
   upper <- unlist(lapply(getexp(nl, "variables"), "[", "max"))
 
-  # Get evaulation criterion reporter from metrics vector:
-  evalcrit_reporter <- getexp(nl, "metrics")[evalcrit]
+  # Get evaulation criterion reporter from metrics vector or use supplied function:
+  if(is.function(evalcrit)){
+    evalcrit_reporter <- evalcrit
+  } else {
+    evalcrit_reporter <- getexp(nl, "metrics")[evalcrit]
+  }
+
   # Check if the reporter exists:
-  if (is.na(evalcrit_reporter)) {
+  if (suppressWarnings(is.na(evalcrit_reporter))) {
     stop(paste0("Error: No valid reporter at defined evalcrit position: ",
                 evalcrit))
   }
@@ -828,7 +876,7 @@ simdesign_GenSA <- function(nl,
 #' @param nl nl object with a defined experiment
 #' @param popSize population Size parameter for genetic algorithm
 #' @param iters number of iterations for genetic algorithm function
-#' @param evalcrit position of evaluation criterion within defined NetLogo metrics of nl experiment
+#' @param evalcrit position of evaluation criterion within defined NetLogo metrics of nl experiment or a function that reports a single numeric value
 #' @param elitism elitism rate of genetic algorithm function
 #' @param mutationChance mutation rate of genetic algorithm function
 #' @param nseeds number of seeds for this simulation design
@@ -841,9 +889,17 @@ simdesign_GenSA <- function(nl,
 #'
 #' The GenAlg simdesign generates a Genetic Algorithm experiment within the defined min and max parameter boundaries
 #' that are defined in the variables field of the experiment object within the nl object.
-#' The evalcrit reporter defines the evaluation criterion for the simulated annealing procedure.
-#' The reporter is defined within the experiment metrics vector.
-#' For the Genetic Algorithm function we only refer to the position of the reporter that we want to use for evaluation.
+#'
+#' The evalcrit reporter defines the evaluation criterion for the Genetic algorithm procedure.
+#' There are two options to evaluate the fitness value of each iteration of the algorithm:
+#' 1. Use a reporter that is defined within the experiment metrics vector.
+#' You can just enter the position of that metric within the experiment metrics vector (e.g. 1 would use the first defined metric of the experiment to evaluate each iteration).
+#' The algorithm automatically calculates the mean value of this reporter if evalticks is defined to measure multiple ticks during each simulation.
+#' 2. Use a self-defined evaluation function
+#' You can define a function that post-processes NetLogo output to calculate an evaluation value. This function must accept the nl object as input and return one single numeric value.
+#' The nl object that is then provided to the evaluation function will have results of the current iteration attached. The results can be accessed via the simoutput slot of the simdesign.
+#' You can pass this function to evalcrit. It is then applied to the output of each iteration.
+#'
 #' The function uses the genalg package to set up a Genetic Algorithm function.
 #' For details on the genalg function parameters see ?genalg::rbga
 #' Finally, the function reports a simdesign object.
@@ -857,9 +913,24 @@ simdesign_GenSA <- function(nl,
 #' # For this example, we load a nl object from test data.
 #'
 #' nl <- nl_lhs
+#'
+#' # Example 1: Using a metric from the experiment metrics vector for evaluation:
 #' nl@@simdesign <- simdesign_GenAlg(nl=nl,
+#'                                   evalcrit=1,
 #'                                   nseeds=1)
 #'
+#' # Example 2: Using a self-defined evaluation function
+#' # For demonstration we define a simple function that calculates
+#' # the maximum value of count sheep output.
+#' critfun <- function(nl) {
+#' results <- nl@@simdesign@@simoutput
+#' crit <- as.integer(max(results$`count sheep`))
+#' return(crit)
+#' }
+#'
+#' nl@@simdesign <- simdesign_GenAlg(nl=nl,
+#'                                   evalcrit=critfun,
+#'                                   nseeds=1)
 #'
 #'
 #' @aliases simdesign_GenAlg
@@ -885,10 +956,15 @@ simdesign_GenAlg <- function(nl,
   lower <- unlist(lapply(getexp(nl, "variables"), "[", "min"))
   upper <- unlist(lapply(getexp(nl, "variables"), "[", "max"))
 
-  # Get evaulation criterion reporter from metrics vector:
-  evalcrit_reporter <- getexp(nl, "metrics")[evalcrit]
+  # Get evaulation criterion reporter from metrics vector or use supplied function:
+  if(is.function(evalcrit)){
+    evalcrit_reporter <- evalcrit
+  } else {
+    evalcrit_reporter <- getexp(nl, "metrics")[evalcrit]
+  }
+
   # Check if the reporter exists:
-  if (is.na(evalcrit_reporter)) {
+  if (suppressWarnings(is.na(evalcrit_reporter))) {
     stop(paste0("Error: No valid reporter at defined evalcrit position: ",
                 evalcrit))
   }

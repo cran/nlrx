@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 ## ----eval=FALSE----------------------------------------------------------
 #  library(future)
 #  plan(multisession)
-#  results %<-% run_nl_all(nl = nl)
+#  results <- run_nl_all(nl = nl)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  library(future)
 #  plan(multisession)
-#  results %<-% run_nl_all(nl = nl, split = 4)
+#  results <- run_nl_all(nl = nl, split = 4)
 

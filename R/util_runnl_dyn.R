@@ -75,12 +75,12 @@ util_run_nl_dyn_GenSA_fn <- function(param,
   names(param) <- names(getexp(nl, "variables"))
 
   ## Generate parameterset
-  gensa_param <- tibble::as.tibble(t(param))
+  gensa_param <- tibble::as_tibble(t(param))
 
   ## Add constants if any:
   if(length(getexp(nl, "constants")) > 0)
   {
-    gensa_param <- tibble::as.tibble(cbind(gensa_param,
+    gensa_param <- tibble::as_tibble(cbind(gensa_param,
                                            getexp(nl, "constants"),
                                            stringsAsFactors = FALSE))
 
@@ -100,10 +100,17 @@ util_run_nl_dyn_GenSA_fn <- function(param,
   )
 
   # Select metric for gensa:
-  results <- results[[evalcrit]]
-  # Calc mean and convert to numeric:
-  if (length(results) > 1) {
-    results <- mean(results)
+  if(is.function(evalcrit)) {
+    # Apply evalcrit function
+    nl@simdesign@simoutput <- results
+    results <- evalcrit(nl)
+  } else {
+    # Select evalcrit metric and calculate mean value over ticks:
+    results <- results[[evalcrit]]
+    # Calc mean and convert to numeric:
+    if (length(results) > 1) {
+      results <- mean(results)
+    }
   }
   results <- as.numeric(results)
 
@@ -189,12 +196,12 @@ util_run_nl_dyn_GenAlg_fn <- function(param,
   names(param) <- names(getexp(nl, "variables"))
 
   ## Generate parameterset
-  gensa_param <- tibble::as.tibble(t(param))
+  gensa_param <- tibble::as_tibble(t(param))
 
   ## Add constants if any:
   if(length(getexp(nl, "constants")) > 0)
   {
-    gensa_param <- tibble::as.tibble(cbind(gensa_param,
+    gensa_param <- tibble::as_tibble(cbind(gensa_param,
                                            getexp(nl, "constants"),
                                            stringsAsFactors = FALSE))
 
@@ -214,10 +221,17 @@ util_run_nl_dyn_GenAlg_fn <- function(param,
   )
 
   # Select metric for gensa:
-  results <- results[[evalcrit]]
-  # Calc mean and convert to numeric:
-  if (length(results) > 1) {
-    results <- mean(results)
+  if(is.function(evalcrit)) {
+    # Apply evalcrit function
+    nl@simdesign@simoutput <- results
+    results <- evalcrit(nl)
+  } else {
+    # Select evalcrit metric and calculate mean value over ticks:
+    results <- results[[evalcrit]]
+    # Calc mean and convert to numeric:
+    if (length(results) > 1) {
+      results <- mean(results)
+    }
   }
   results <- as.numeric(results)
 

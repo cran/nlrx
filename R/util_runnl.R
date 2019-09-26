@@ -345,13 +345,13 @@ util_gather_results <- function(nl, outfile, seed, siminputrow) {
   patches_string <- NLtable[, grepl(c("metrics.patches"), names(NLtable))]
   patches_string <- stringr::str_split(patches_string$metrics.patches, " ")
   patches_string <- purrr::map(patches_string, function(x) {
-    patches_owns <- tibble::as.tibble(x = x)
+    patches_owns <- tibble::as_tibble(x = x)
     patches_owns <- tidyr::separate(patches_owns, value,
                                     getexp(nl, "metrics.patches"), sep=",")
     patches_owns <- dplyr::mutate_all(patches_owns, function(x) {
-      suppressWarnings(ifelse(is.na(as.numeric(as.character(x))),
+      suppressWarnings(if(!is.na(x)) {ifelse(is.na(as.numeric(as.character(x))),
                               as.character(x),
-                              as.numeric(as.character(x))))
+                              as.numeric(as.character(x)))})
     })
     patches_owns$agent <- "patches"
     patches_owns$breed <- NA_character_
@@ -366,15 +366,15 @@ util_gather_results <- function(nl, outfile, seed, siminputrow) {
   turtles_string <- NLtable[, grepl(col.name, names(NLtable))]
   turtles_string <- stringr::str_split(dplyr::pull(turtles_string, col.name), " ")
   turtles_string <- purrr::map(turtles_string, function(x) {
-    turtles_owns <- tibble::as.tibble(x = x)
+    turtles_owns <- tibble::as_tibble(x = x)
     turtles_owns <- tidyr::separate(turtles_owns,
                                     value,
                                     metrics,
                                     sep=",")
     turtles_owns <- dplyr::mutate_all(turtles_owns, function(x) {
-      suppressWarnings(ifelse(is.na(as.numeric(as.character(x))),
+      suppressWarnings(if(!is.na(x)) {ifelse(is.na(as.numeric(as.character(x))),
                               as.character(x),
-                              as.numeric(as.character(x))))
+                              as.numeric(as.character(x)))})
     })
     turtles_owns$agent <- "turtles"
     return(turtles_owns)
@@ -388,15 +388,15 @@ util_gather_results <- function(nl, outfile, seed, siminputrow) {
   links_string <- NLtable[, grepl(col.name, names(NLtable))]
   links_string <- stringr::str_split(dplyr::pull(links_string, col.name), " ")
   links_string <- purrr::map(links_string, function(x) {
-    links_owns <- tibble::as.tibble(x = x)
+    links_owns <- tibble::as_tibble(x = x)
     links_owns <- tidyr::separate(links_owns,
                                   value,
                                   metrics,
                                   sep=",")
     links_owns <- dplyr::mutate_all(links_owns, function(x) {
-      suppressWarnings(ifelse(is.na(as.numeric(as.character(x))),
+      suppressWarnings(if(!is.na(x)) {ifelse(is.na(as.numeric(as.character(x))),
                               as.character(x),
-                              as.numeric(as.character(x))))
+                              as.numeric(as.character(x)))})
 
     })
     links_owns$agent <- "links"
@@ -469,8 +469,7 @@ util_read_write_batch <- function(nl) {
       jarpathline <- paste0("SET \"ABSOLUTE_CLASSPATH=", jarpath, "\"")
 
       # Block 3 of the batch file:
-      block3 <- c("\"%JAVA%\" %JVM_OPTS% -classpath \"%ABSOLUTE_CLASSPATH%\"
-                  org.nlogo.headless.Main %ARGS%")
+      block3 <- c("\"%JAVA%\" %JVM_OPTS% -classpath \"%ABSOLUTE_CLASSPATH%\" org.nlogo.headless.Main %ARGS%")
 
       # Put all blocks together:
       allblocks <- c(block1, jvmoptsline, block2, jarpathline, block3)

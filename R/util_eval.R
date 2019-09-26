@@ -226,15 +226,16 @@ util_eval_experiment <- function(nl) {
   if (anyNA(getexp(nl, "metrics"))) {
     notvalid <- c(notvalid, "metrics")
   }
-  if (purrr::is_empty(getexp(nl, "variables")) &
-    purrr::is_empty(getexp(nl, "constants"))) {
-    notvalid <- c(notvalid, "variables or constants")
-  }
 
   if (length(notvalid) > 0) {
     stop(paste0("To add a sim design to a nl object you need to
     define a proper experiment first. The following elements are missing without
     default: ", paste(notvalid, collapse = " ; ")), call. = FALSE)
+  }
+
+  # Check if experiment name contains white spaces:
+  if (grepl("\\s", getexp(nl, "expname"))) {
+    stop(paste0("Experiment names are not allowed to contain whitespaces!"))
   }
 
   # Check if a NetLogo parameter has been defined in variables AND constants:
@@ -368,4 +369,17 @@ eval_variables_constants <- function(nl) {
 
   # If no error message occurred print a message:
   message("All defined variables and constants are valid!")
+}
+
+
+.util_check_siminput_tibble <- function(nl, new_simdesign) {
+
+  ## Check if there are any NAs in the variables columns:
+
+  if (isTRUE(anyNA(new_simdesign@siminput[names(nl@experiment@variables)]))) {
+    warning("The generated siminput tibble of the simdesign contains NA values. You may need to increase the number of samples!",
+            call. = FALSE)
+  }
+
+
 }

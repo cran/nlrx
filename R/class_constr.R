@@ -68,7 +68,7 @@ nl <- function(nlversion = "6.0.2",
 #'
 #' @description Construct a new experiment object
 #'
-#' @param expname A character string defining the name of the experiment
+#' @param expname A character string defining the name of the experiment, no whitespaces allowed
 #' @param outpath Path to a directory where experiment output will be stored
 #' @param repetition A number which gives the number of repetitions for each row of the simulation design input tibble
 #' @param tickmetrics Character string "true" runs defined metrics on each simulation tick. "false" runs metrics only after simulation is finished
@@ -108,7 +108,7 @@ nl <- function(nlversion = "6.0.2",
 #'
 #' \emph{idsetup, idgo}
 #'
-#' These two class slots accept strings, or vectors of strings, defining NetLogo model procedures that should be executed for model setup (idestup) and model execution (idgo).
+#' These two class slots accept strings, or vectors of strings, defining NetLogo model procedures that should be executed for model setup (idsetup) and model execution (idgo).
 #'
 #' \emph{runtime}
 #'
@@ -132,13 +132,13 @@ nl <- function(nlversion = "6.0.2",
 #' It is not possible to enter a NetLogo parameter in both lists (a warning message will appear when a simdesign is attached to such an experiment).
 #' All simdesigns except \link[nlrx]{simdesign_simple} need defined variables for setting up a parameter matrix.
 #' Variables can be defined as distinct values, value distributions or range with increment.
-#' The information that is needed, depends on the chosen simdesign (details on variable definition requiements can be found in the helpfiles of each simdesign helper function).
+#' The information that is needed, depends on the chosen simdesign (details on variable definition requirements can be found in the helpfiles of each simdesign helper function).
 #'
 #' \strong{All remaining slots are optional:}
 #'
 #' \emph{expname}
 #'
-#' A character string defining the name of the experiment, useful for documentation purposes.
+#' A character string defining the name of the experiment, useful for documentation purposes. The string must not contain any whitespaces.
 #'
 #' \emph{outpath}
 #'
