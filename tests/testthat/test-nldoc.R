@@ -26,8 +26,8 @@ testthat::test_that("nldoc", {
     testthat::expect_true(file.exists(nldoc_html))
 
     ## Read html back in:
-    nldoc_readin <- XML::readHTMLList(nldoc_html)
-    testthat::expect_equal(length(nldoc_readin), 8)
+    #nldoc_readin <- XML::readHTMLList(nldoc_html)
+    #testthat::expect_equal(length(nldoc_readin), 8)
 
     # Create docx documentation:
     nldoc_dir <- tempdir()
@@ -49,9 +49,27 @@ testthat::test_that("nldoc", {
     testthat::context("nldoc_network")
 
     nw <- nldoc_network(modelfiles)
-
     testthat::expect_match(class(nw), "igraph")
     testthat::expect_equal(length(nw), 10)
-  }
 
+    # Test nldoc without gui, infotab and bs:
+    nldoc_dir <- tempdir()
+    nldoc(modelfiles = modelfiles,
+          infotab=FALSE,
+          gui=FALSE,
+          bs=FALSE,
+          outpath = nldoc_dir,
+          output_format = "html",
+          number_sections = TRUE,
+          theme = "cosmo",
+          date = date(),
+          toc = TRUE)
+
+    nldoc_html <- file.path(nldoc_dir, "nldoc.html")
+    testthat::expect_true(file.exists(nldoc_html))
+
+    ## Read html back in:
+    #nldoc_readin <- XML::readHTMLList(nldoc_html)
+    #testthat::expect_equal(length(nldoc_readin), 3)
+  }
 })

@@ -21,9 +21,9 @@ testthat::test_that("Simdesign objects are created properly", {
     metrics = c("count sheep", "count wolves"),
     variables = list(
       "initial-number-sheep" = list(min = 50, max = 150, step = 10,
-                                    qfun = "qunif"),
+                                    qfun = "qunif", values=c(10, 20, 30)),
       "initial-number-wolves" = list(min = 50, max = 150, step = 10,
-                                     qfun = "qunif")
+                                     qfun = "qunif", values=c(10, 20, 30))
     ),
     constants = list(
       "model-version" = "\"sheep-wolves-grass\"",
@@ -51,6 +51,19 @@ testthat::test_that("Simdesign objects are created properly", {
   testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
 
 
+  # Testing validity of simdesign distinct
+  nl@simdesign <- simdesign_distinct(
+    nl = nl,
+    nseeds = 3
+  )
+
+  testthat::expect_match(getsim(nl, "simmethod"), "distinct")
+  testthat::expect_equal(nrow(getsim(nl, "siminput")), 3)
+  testthat::expect_equal(length(getsim(nl, "simobject")), 0)
+  testthat::expect_equal(length(getsim(nl, "simseeds")), 3)
+  testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
+
+
   # Testing validity of simdesign ff:
   nl@simdesign <- simdesign_ff(
     nl = nl,
@@ -58,7 +71,7 @@ testthat::test_that("Simdesign objects are created properly", {
   )
 
   testthat::expect_match(getsim(nl, "simmethod"), "ff")
-  testthat::expect_equal(nrow(getsim(nl, "siminput")), 121)
+  testthat::expect_equal(nrow(getsim(nl, "siminput")), 9)
   testthat::expect_equal(length(getsim(nl, "simobject")), 0)
   testthat::expect_equal(length(getsim(nl, "simseeds")), 3)
   testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
@@ -149,6 +162,15 @@ testthat::test_that("Simdesign objects are created properly", {
   testthat::expect_equal(length(getsim(nl, "simseeds")), 3)
   testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
 
+  # Testing morris with wrong values:
+  testthat::expect_warning(simdesign_morris(nl = nl,
+                                          morristype = "oat",
+                                          morrislevels = 2,
+                                          morrisr = 1,
+                                          morrisgridjump = 4,
+                                          nseeds = 3))
+
+
   # Testing validity of simdesign eFast:
   nl@simdesign <- simdesign_eFast(
     nl = nl,
@@ -162,4 +184,55 @@ testthat::test_that("Simdesign objects are created properly", {
   testthat::expect_match(class(getsim(nl, "simobject")[[1]]), "fast99")
   testthat::expect_equal(length(getsim(nl, "simseeds")), 3)
   testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
+
+  # Testing validity of simdesign ABCmcmc_Marjoram
+  nl@simdesign <- simdesign_ABCmcmc_Marjoram(nl=nl,
+                                             summary_stat_target = c(100, 80),
+                                             n_rec = 100,
+                                             n_calibration=500,
+                                             use_seed = TRUE,
+                                             progress_bar = TRUE,
+                                             nseeds = 1)
+
+
+  testthat::expect_match(getsim(nl, "simmethod"), "ABCmcmc")
+  testthat::expect_equal(nrow(getsim(nl, "siminput")), 0)
+  testthat::expect_equal(length(getsim(nl, "simobject")), 15)
+  testthat::expect_match(class(getsim(nl, "simobject")), "list")
+  testthat::expect_equal(length(getsim(nl, "simseeds")), 1)
+  testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
+
+  # Testing validity of simdesign ABCmcmc_Marjoram_original
+  nl@simdesign <- simdesign_ABCmcmc_Marjoram_original(nl=nl,
+                                             summary_stat_target = c(100, 80),
+                                             n_rec = 100,
+                                             use_seed = TRUE,
+                                             progress_bar = TRUE,
+                                             nseeds = 1)
+
+
+  testthat::expect_match(getsim(nl, "simmethod"), "ABCmcmc")
+  testthat::expect_equal(nrow(getsim(nl, "siminput")), 0)
+  testthat::expect_equal(length(getsim(nl, "simobject")), 15)
+  testthat::expect_match(class(getsim(nl, "simobject")), "list")
+  testthat::expect_equal(length(getsim(nl, "simseeds")), 1)
+  testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
+
+  # Testing validity of simdesign ABCmcmc_Wegmann
+  nl@simdesign <- simdesign_ABCmcmc_Wegmann(nl=nl,
+                                            summary_stat_target = c(100, 80),
+                                            n_rec = 100,
+                                            n_calibration=500,
+                                            use_seed = TRUE,
+                                            progress_bar = TRUE,
+                                            nseeds = 1)
+
+
+  testthat::expect_match(getsim(nl, "simmethod"), "ABCmcmc")
+  testthat::expect_equal(nrow(getsim(nl, "siminput")), 0)
+  testthat::expect_equal(length(getsim(nl, "simobject")), 16)
+  testthat::expect_match(class(getsim(nl, "simobject")), "list")
+  testthat::expect_equal(length(getsim(nl, "simseeds")), 1)
+  testthat::expect_equal(nrow(getsim(nl, "simoutput")), 0)
+
 })

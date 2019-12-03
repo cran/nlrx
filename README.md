@@ -7,7 +7,7 @@
 Status](https://travis-ci.org/ropensci/nlrx.svg?branch=master)](https://travis-ci.org/ropensci/nlrx)[![Build
 status](https://ci.appveyor.com/api/projects/status/swsstjxxjnkyuoh9/branch/master?svg=true)](https://ci.appveyor.com/project/marcosci/nlrx/branch/master)
 [![Codecov test
-coverage](https://codecov.io/gh/nldoc/nlrx/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/nlrx?branch=master)
+coverage](https://codecov.io/gh/ropensci/nlrx/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/nlrx)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/nlrx)](https://cran.r-project.org/package=nlrx)
@@ -86,10 +86,11 @@ to install NetLogo on the local system.
 Because NetLogo is executed in a Java virtual machine, Java needs to be
 installed on the local/remote system as well. We recommend the [Oracle
 Java SE Development
-Kit 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
-While the nlrx package might work without setting the Java system path
-explicitly, we recommend to make sure that JAVA\_HOME points to the
-correct Java installation of the system.
+Kit 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+or the [openjdk](https://github.com/ojdkbuild/ojdkbuild). While the nlrx
+package might work without setting the Java system path explicitly, we
+recommend to make sure that JAVA\_HOME points to the correct Java
+installation of the system.
 
 ## Installation
 

@@ -223,3 +223,49 @@ knitr::opts_chunk$set(
 #                                  nseeds=1)
 #  
 
+## ----eval=FALSE----------------------------------------------------------
+#  nl@experiment <- experiment(expname="wolf-sheep",
+#                              outpath="C:/out/",
+#                              repetition=1,
+#                              tickmetrics="true",
+#                              idsetup="setup",
+#                              idgo="go",
+#                              idfinal=NA_character_,
+#                              idrunnum=NA_character_,
+#                              runtime=50,
+#                              evalticks=seq(40,50),
+#                              metrics=c("count sheep", "count wolves", "count patches with [pcolor = green]"),
+#                              variables = list('initial-number-sheep' = list(min=50, max=150),
+#                                               'initial-number-wolves' = list(min=50, max=150)),
+#                              constants = list("model-version" = "\"sheep-wolves-grass\"",
+#                                               "grass-regrowth-time" = 30,
+#                                               "sheep-gain-from-food" = 4,
+#                                               "wolf-gain-from-food" = 20,
+#                                               "sheep-reproduce" = 4,
+#                                               "wolf-reproduce" = 5,
+#                                               "show-energy?" = "false"))
+#  
+#  nl@simdesign <- simdesign_ABCmcmc_Marjoram(nl=nl,
+#                                             summary_stat_target = c(100, 80),
+#                                             n_rec = 100,
+#                                             n_calibration=200,
+#                                             use_seed = TRUE,
+#                                             progress_bar = TRUE,
+#                                             nseeds = 1)
+#  
+#  nl@simdesign <- simdesign_ABCmcmc_Marjoram_original(nl=nl,
+#                                             summary_stat_target = c(100, 80),
+#                                             n_rec = 10,
+#                                             use_seed = TRUE,
+#                                             progress_bar = TRUE,
+#                                             nseeds = 1)
+#  
+#  nl@simdesign <- simdesign_ABCmcmc_Wegmann(nl=nl,
+#                                            summary_stat_target = c(100, 80),
+#                                            n_rec = 10,
+#                                            n_calibration=200,
+#                                            use_seed = TRUE,
+#                                            progress_bar = TRUE,
+#                                            nseeds = 1)
+#  
+

@@ -13,7 +13,7 @@
 
 <meta name="author" content="Jan Salecker" />
 
-<meta name="date" content="2019-09-26" />
+<meta name="date" content="2019-12-03" />
 
 <title>Advanced configuration</title>
 
@@ -304,12 +304,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Advanced configuration</h1>
 <h4 class="author">Jan Salecker</h4>
-<h4 class="date">2019-09-26</h4>
+<h4 class="date">2019-12-03</h4>
 
 
 
-<div id="notes-on-variables-and-constants-definitions" class="section level2">
-<h2>Notes on variables and constants definitions</h2>
+<div id="variables-and-constants-definitions" class="section level2">
+<h2>Variables and constants definitions</h2>
 <p>Correctly defining variables within the experiment class object is crucial for creating simdesigns. The implemented simdesigns have different requirements for variable definitions:</p>
 <table>
 <thead>
@@ -375,6 +375,21 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <td>min, max</td>
 <td>numeric</td>
 </tr>
+<tr class="even">
+<td>simdesign_ABCmcmc_Marjoram</td>
+<td>min, max, qfun</td>
+<td>numeric</td>
+</tr>
+<tr class="odd">
+<td>simdesign_ABCmcmc_Marjoram_original</td>
+<td>min, max, qfun</td>
+<td>numeric</td>
+</tr>
+<tr class="even">
+<td>simdesign_ABCmcmc_Wegmann</td>
+<td>min, max, qfun</td>
+<td>numeric</td>
+</tr>
 </tbody>
 </table>
 <p>Additionally, please note the following restrictions in order to define variables and constants correctly:</p>
@@ -384,8 +399,13 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li>Variable values that should be recognized by NetLogo as logical need to be entered as strings (e.g. <code>&quot;false&quot;</code>).</li>
 <li>It is not allowed to list the same variable in the variables and constants list.</li>
 <li>NetLogo model parameters that are not listed in any of these two lists will be set with their default value from the NetLogo model interface.</li>
+<li>simdesign_simple() requires at least one defined constant within the constants list. If your model does not have any globals (GUI and code), please create a dummy global (either create a global widget on the GUI or add a dummy variable to the globals[] code section) for your model and put it in the constants list with an appropriate value.</li>
 </ul>
-<p>A complete list of all valid NetLogo parameters can be loaded by commiting a nl object with a valid modelpath to the function <code>report_model_parameters()</code>. This function reads all GUI elements of the NetLogo model that can be set by nlrx. After attaching an experiment to an nl object, validity of defined experiment variables and constants can be checked by commiting the nl object to the function <code>eval_constants_variables()</code>. The function will report detailed warnings or error messages, if definitions of variables or constants are invalid.</p>
+<p>A complete list of all valid NetLogo parameters can be loaded by commiting a nl object with a valid modelpath to the function <code>report_model_parameters()</code>. This function reads all GUI elements of the NetLogo model that can be set by nlrx. After attaching an experiment to an nl object, validity of defined experiment variables and constants can be checked by commiting the nl object to the function <code>eval_variables_constants()</code>. The function will report detailed warnings or error messages, if definitions of variables or constants are invalid.</p>
+</div>
+<div id="print-functions" class="section level2">
+<h2>Print functions</h2>
+<p><code>print(nl)</code> can be used with any nl class object. The function will print a formatted overview of class contents to the console. The function will also print a short summary checklist that may be helpful for debugging certain issues. Depending on the simdesign, the summary table also prints the estimated number of runs.</p>
 </div>
 <div id="capturing-progress-of-model-simulations" class="section level2">
 <h2>Capturing progress of model simulations</h2>
@@ -396,25 +416,25 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h2>Handling NetLogo runtime errors</h2>
 <p>Usually, runtime errors of NetLogo model simulations are printed to the R console and the current execution of <code>run_nl_all()</code>, <code>run_nl_one()</code> or <code>run_nl_dyn()</code> breaks. However, it can happen that a model simulation freezes due to Java runtime errors. Unfortunately it is not possible to terminate the Java virtual machine or print an error message to the console after such a runtime error occurred. The current R session and the freezed Java Virtual Machine need to be terminated manually. Thus, NetLogo models should be debugged in NetLogo prior to execution of large experiments with nlrx. Capturing progress of model simulations (see section “Capturing progress of model simulations”) might help in debugging runtime errors that freeze the Java Virtual Machine.</p>
 </div>
-<div id="notes-on-self-written-output" class="section level2">
-<h2>Notes on self-written output</h2>
+<div id="self-written-netlogo-output" class="section level2">
+<h2>Self-written NetLogo output</h2>
 <p>The experiment provides a slot called “idrunnum”. This slot can be used to transfer the current nlrx experiment name, random seed and runnumber (siminputrow) to NetLogo. To use this functionality, a string input field widget needs to be created on the GUI of your NetLogo model. The name of this widget can be entered into the “idrunnum” field of the experiment. During simulations, the value of this widget is automatically updated with a generated string that contains the current nlrx experiment name, random seed and siminputrow (“expname_seed_siminputrow”). For self-written output In NetLogo, we suggest to include this global variable which allows referencing the self-written output files to the collected output of the nlrx simulations in R.</p>
 </div>
-<div id="notes-on-temporary-files-management" class="section level2">
-<h2>Notes on temporary files management</h2>
+<div id="temporary-files-management" class="section level2">
+<h2>Temporary files management</h2>
 <p>nlrx uses temporary files to store experiment xml files, commandline batch files to start NetLogo simulations and csv output files. These temporary files are stored in the default temporary files directory of the R session. By default, these files are deleted after each simulation run. However, if it is needed to look at this files, automatic deletion of temporary files can be disabled by setting the corresponding cleanup parameters in the <code>run_nl</code> functions (cleanup.csv, cleanup.xml, cleanup.bat function parameters).</p>
 <p>On unix systems, it can happen that system processes delete files in the default temporary files folder. Thus, we recommend to reassign the temporary files folder for the R-session to another folder. The R-package <a href="https://www.rforge.net/unixtools/">unixtools</a> provides a function to reassign the temporary files folder for the current R-session:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&#39;unixtools&#39;</span>, <span class="dt">repos =</span> <span class="st">&#39;http://www.rforge.net/&#39;</span>)</a>
 <a class="sourceLine" id="cb1-2" title="2">unixtools<span class="op">::</span><span class="kw">set.tempdir</span>(<span class="st">&quot;&lt;path-to-temp-dir&gt;&quot;</span>)</a></code></pre></div>
 </div>
-<div id="notes-on-random-seed-and-repetitions-management" class="section level2">
-<h2>Notes on random-seed and repetitions management</h2>
+<div id="random-seed-and-repetitions-management" class="section level2">
+<h2>random-seed and repetitions management</h2>
 <p>The experiment provides a slot called “repetition” which allows to run multiple simulations of one parameterization. This is only useful if you manually generate a new random-seed during the setup of your model. By default, the NetLogo random-seed is set by the simdesign that is attached to your nl object. If your model does not reset the random seed manually, the seed will always be the same for each repetition.</p>
 <p>However, the concept of nlrx is based on sensitivity analyses. Here, you may want to exclude stochasticity from your output and instead do multiple sensitivity analyses with the same parameter matrix but different random seeds. You can then observe the effect of stochasticity on the level of your final output, the sensitivity indices. Thus we suggest to set the experiment repetition to 1 and instead use the nseeds variable of the desired simdesign to run multiple simulations with different random seeds.</p>
 <p>In summary, if you set the random-seed of your NetLogo model manually, you can increase the repitition of the experiment to run several simulations with equal parameterization and different random seeds. Otherwise, set the experiment repetition to 1 and increase the nseeds variable of your desired simdesign.</p>
 </div>
-<div id="notes-on-runtime-and-measurements" class="section level2">
-<h2>Notes on runtime and measurements</h2>
+<div id="runtime-and-measurements" class="section level2">
+<h2>Runtime and measurements</h2>
 <p>The runtime of NetLogo model simulations can be controlled with two slots of the experiment class:</p>
 <ul>
 <li>runtime - an integer that defines the maximum number of ticks that are simulated</li>
@@ -440,20 +460,126 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb2-3" title="3">end</a></code></pre></div>
 <p>In your nlrx experiment metrics field you can then enter “green.patches” which is way more intuitive then “count patches with [pcolor = green]”.</p>
 </div>
-<div id="notes-on-netlogo-extensions" class="section level2">
-<h2>Notes on NetLogo extensions</h2>
+<div id="netlogo-extensions" class="section level2">
+<h2>NetLogo extensions</h2>
 <p>Usually, all NetLogo extensions that are shipped with NetLogo should also work with nlrx. However, depending on the system it can happen that NetLogo extensions are not found properly. To solve such problems we advise to put your <code>.nlogo model</code> file in the <code>app/models</code> subdirectory of the NetLogo installation path. A special case is the NetLogo r-extension because it needs to be stopped manually in between model runs. To achieve that, simply put the <code>r:stop</code> command in the <code>idfinal</code> slot of your experiment: <code>idfinal = &quot;r:stop&quot;</code>.</p>
 </div>
-<div id="notes-on-parallelisation-and-the-future-concept" class="section level2">
-<h2>Notes on parallelisation and the future concept</h2>
-<p>The run_nl_all function uses the <code>future_map_dfr()</code> function from the <a href="https://github.com/DavisVaughan/furrr">furrr package</a>. The simulations are executed in a nested loop where the outer loop iterates over the random seeds of your simdesign, and the inner loop iterates over the rows of the siminput parameter matrix of your simdesign. These loops can be executed in parallel by setting up an appropriate plan from the <a href="https://github.com/HenrikBengtsson/future">future package</a>. <del>We also suggest to always use a future operator (<code>%&lt;-%</code>) when you call this function in parallel:</del> Currently, we do not suggest to use implicit futures (<code>%&lt;-%</code>) because parallelisation might fail.</p>
+<div id="parallelisation-and-the-future-concept" class="section level2">
+<h2>Parallelisation and the future concept</h2>
+<p>The run_nl_all function uses the <code>future_map_dfr()</code> function from the <a href="https://github.com/DavisVaughan/furrr">furrr package</a>. The simulations are executed in a nested loop where the outer loop iterates over the random seeds of your simdesign, and the inner loop iterates over the rows of the siminput parameter matrix of your simdesign. These loops can be executed in parallel by setting up an appropriate plan from the <a href="https://github.com/HenrikBengtsson/future">future package</a>. See examples below for more details on parallelisation on local machines and remote HPC clusters.</p>
+<div id="parallelisation-on-local-machine" class="section level3">
+<h3>Parallelisation on local machine</h3>
+<p>Model simulations can be distributed to each logical processor on the local machine in parallel. The future package provides two options for parallelization, explicit futures and implicit futures which are executed in the background and do not block the console while running.</p>
+<p>Running parallel simulations with an explicit future command:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(future)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw">plan</span>(multisession)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">plan</span>(multiprocess)</a>
 <a class="sourceLine" id="cb3-3" title="3">results &lt;-<span class="st"> </span><span class="kw">run_nl_all</span>(<span class="dt">nl =</span> nl)</a></code></pre></div>
-<p>In cases, where the number of random seeds is lower than the available processor cores, parallelisation may not be completely efficient. To allow efficient parallelisation, even for a small number of random seeds the split parameter of the <code>run_nl_all()</code> function can be used to split the parameter matrix into smaller chunks, which can be distributed to separate processor cores. For example, a simulation with 1000 runs (rows of the siminput matrix) and 2 random seeds should be distributed to 8 processor cores. By default, the parallelisation loop would consist of two jobs (one for each random seed) with 1000 simulation runs each. This experiment would only utilize 2 of the 8 available processor cores. By setting the split parameter to 4, we increase the total number of jobs from 2 to 8 (2 random-seeds * 4 parameter matrix chunks). Each job runs 1/4th of the parameter input matrix (250 rows) using one of the 2 defined random seeds.</p>
+<p>For running parallel simulations with an implicit future command we need to define the type of parallelisation for each level of the nested <code>furrr::future_map_dfr()</code> function individually. Because we want to parallelize the actual simulations, we need to use the multiprocess plan on the inner level. Note, that we use the assignment operator for implicit futures (<code>%&lt;-%</code>):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">library</span>(future)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw">plan</span>(multisession)</a>
-<a class="sourceLine" id="cb4-3" title="3">results &lt;-<span class="st"> </span><span class="kw">run_nl_all</span>(<span class="dt">nl =</span> nl, <span class="dt">split =</span> <span class="dv">4</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">plan</span>(<span class="kw">list</span>(sequential, multiprocess))</a>
+<a class="sourceLine" id="cb4-3" title="3">results <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw">run_nl_all</span>(<span class="dt">nl =</span> nl)</a></code></pre></div>
+<p>In cases, where the number of random seeds is lower than the available processor cores, parallelisation may not be completely efficient. To allow efficient parallelisation, even for a small number of random seeds the split parameter of the <code>run_nl_all()</code> function can be used to split the parameter matrix into smaller chunks, which can be distributed to separate processor cores. For example, a simulation with 1000 runs (rows of the siminput matrix) and 2 random seeds should be distributed to 8 processor cores. By default, the parallelisation loop would consist of two jobs (one for each random seed) with 1000 simulation runs each. This experiment would only utilize 2 of the 8 available processor cores. By setting the split parameter to 4, we increase the total number of jobs from 2 to 8 (2 random-seeds * 4 parameter matrix chunks). Each job runs 1/4th of the parameter input matrix (250 rows) using one of the 2 defined random seeds.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">plan</span>(multisession)</a>
+<a class="sourceLine" id="cb5-3" title="3">results &lt;-<span class="st"> </span><span class="kw">run_nl_all</span>(<span class="dt">nl =</span> nl, <span class="dt">split =</span> <span class="dv">4</span>)</a></code></pre></div>
+</div>
+<div id="parallelisation-on-remote-hpc-cluster" class="section level3">
+<h3>Parallelisation on remote HPC cluster</h3>
+<p>This option requires access to a remote HPC cluster. This example gives you some guidance and examples for sending jobs from an R session on your local machine to an HPC running slurm. Details might be different depending on the HPC setup.</p>
+<p>Some settings, such as ssh access and slurm templates need to be defined to access remote HPC clusters from your local R session. Please check out this <a href="https://r-spatialecology.github.io/gwdg_hpc_guide/">detailed HPC setup manual</a> for examples on required settings for an HPC running slurm.</p>
+<p>In order to run NetLogo models on remote HPCs, required software needs to be installed on the remote system as well: java, Netlogo, R, nlrx and further required R-packages (future/clusterMQ, …). Of course the NetLogo model files need to be available on the remote machine as well.</p>
+<div id="using-the-future-framework" class="section level4">
+<h4>Using the future framework</h4>
+<p>For sending jobs to the remote HPC under the future framework, we need to install and load additional R packages and adjust the future plan before executing <code>run_nl_all()</code>. You need to define a path to your ssh key, a server adress for the HPC, a user name for the HPC and a path to the slurm template file on the HPC. Please also make sure that the <code>nlpath</code>, <code>modelpath</code> and <code>outpath</code> variables within your nl object point to locations on the filesystem of the HPC and not your local filesystem.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Load required packages</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw">library</span>(future.batchtools)</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">library</span>(debugme)</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">Sys.setenv</span>(<span class="dt">DEBUGME=</span><span class="st">&#39;batchtools&#39;</span>)</a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">library</span>(batchtools)</a>
+<a class="sourceLine" id="cb6-7" title="7"></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co"># Define the path to the ssh key for your machine:</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="kw">options</span>(<span class="dt">future.makeNodePSOCK.rshopts =</span> <span class="kw">c</span>(<span class="st">&quot;-i&quot;</span>, <span class="st">&quot;/patch/to/id_rsa&quot;</span>))</a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co"># Define server and your login credentials for the remote HPC:</span></a>
+<a class="sourceLine" id="cb6-11" title="11">login &lt;-<span class="st"> </span><span class="kw">tweak</span>(remote, <span class="dt">workers=</span><span class="st">&quot;server.HPC.de&quot;</span>, <span class="dt">user=</span><span class="st">&quot;username&quot;</span>)</a>
+<a class="sourceLine" id="cb6-12" title="12"></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co"># Define plan for future environment:</span></a>
+<a class="sourceLine" id="cb6-14" title="14">bsub &lt;-<span class="st"> </span><span class="kw">tweak</span>(batchtools_slurm, <span class="dt">template =</span> <span class="st">&quot;slurm.tmpl&quot;</span>, <span class="co"># define name of slurm tmeplate on HPC filesystem</span></a>
+<a class="sourceLine" id="cb6-15" title="15">              <span class="dt">resources =</span> <span class="kw">list</span>(<span class="dt">job.name =</span> <span class="st">&quot;jobname&quot;</span>, <span class="co"># define jobname</span></a>
+<a class="sourceLine" id="cb6-16" title="16">                               <span class="dt">log.file =</span> <span class="st">&quot;jobname.log&quot;</span>, <span class="co"># define logfile name</span></a>
+<a class="sourceLine" id="cb6-17" title="17">                               <span class="dt">queue =</span> <span class="st">&quot;medium&quot;</span>,  <span class="co"># define HPC queue</span></a>
+<a class="sourceLine" id="cb6-18" title="18">                               <span class="dt">service =</span> <span class="st">&quot;normal&quot;</span>, <span class="co"># define HPC service</span></a>
+<a class="sourceLine" id="cb6-19" title="19">                               <span class="dt">walltime =</span> <span class="st">&quot;00:30&quot;</span>, <span class="co"># define walltime</span></a>
+<a class="sourceLine" id="cb6-20" title="20">                               <span class="dt">n_jobs =</span> <span class="st">&quot;1&quot;</span>,   <span class="co"># define number of processes per job</span></a>
+<a class="sourceLine" id="cb6-21" title="21">                               <span class="dt">mem_cpu =</span> <span class="st">&quot;4000&quot;</span>) <span class="co"># define memory per cpu   </span></a>
+<a class="sourceLine" id="cb6-22" title="22"></a>
+<a class="sourceLine" id="cb6-23" title="23"><span class="co"># Load HPC plan:</span></a>
+<a class="sourceLine" id="cb6-24" title="24"><span class="kw">plan</span>(<span class="kw">list</span>(login,</a>
+<a class="sourceLine" id="cb6-25" title="25">          bsub,</a>
+<a class="sourceLine" id="cb6-26" title="26">          multisession))</a>
+<a class="sourceLine" id="cb6-27" title="27"></a>
+<a class="sourceLine" id="cb6-28" title="28"><span class="co"># Execute simulations</span></a>
+<a class="sourceLine" id="cb6-29" title="29">results &lt;-<span class="st"> </span><span class="kw">run_nl_all</span>(<span class="dt">nl =</span> nl)</a></code></pre></div>
+</div>
+<div id="using-the-clustermq-framework" class="section level4">
+<h4>Using the clusterMQ framework</h4>
+<p>The clusterMQ framework is somewhat different from the future framework. However, in our experience it worked more reliable in combination with a slurm HPC. For installation of clustermq and .Rprofile settings see also the <a href="https://r-spatialecology.github.io/gwdg_hpc_guide/">detailed HPC setup manual</a>.</p>
+<p>clusterMQ does not directly support parallelisation of the nested <code>furrr::future_map_dfr()</code> loops of the <code>run_nl_all()</code> function. We need to define our own parallel simulation function, using the <code>run_nl_one()</code> function of the nlrx package:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">library</span>(clustermq)</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co"># First, we set the total number of jobs for the HPC</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co"># In this example we run each simulation as an individual job (recommended).</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co"># Thus to calculate the number of jobs we just multiply the number of parameterizations of the simdesign with the number of random seeds.</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co"># If you want to group several runs into the same job you can adjust this line and choose a lower number.</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co"># However, the number must be chosen that nrow(nl@simdesign@siminput)/njobs results in an integer value</span></a>
+<a class="sourceLine" id="cb7-8" title="8">njobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(nl<span class="op">@</span>simdesign<span class="op">@</span>siminput) <span class="op">*</span><span class="st"> </span><span class="kw">length</span>(nl<span class="op">@</span>simdesign<span class="op">@</span>simseeds)</a>
+<a class="sourceLine" id="cb7-9" title="9"></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co"># Second, we generate vectors for looping trough model runs.</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co"># We generate a vector for simpinputrows by repeating the sequence of parameterisations for each seed.</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co"># Then, we generate a vector of random-seeds by repeating each seed for n times, where n is the number of siminputrows.</span></a>
+<a class="sourceLine" id="cb7-13" title="13">siminputrows &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(nl<span class="op">@</span>simdesign<span class="op">@</span>siminput)), <span class="kw">length</span>(nl<span class="op">@</span>simdesign<span class="op">@</span>simseeds))</a>
+<a class="sourceLine" id="cb7-14" title="14">rndseeds &lt;-<span class="st"> </span><span class="kw">rep</span>(nl<span class="op">@</span>simdesign<span class="op">@</span>simseeds, <span class="dt">each=</span><span class="kw">nrow</span>(nl<span class="op">@</span>simdesign<span class="op">@</span>siminput))</a>
+<a class="sourceLine" id="cb7-15" title="15"></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co"># Third, we define our simulation function</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co"># Please adjust the path to the temporary file directory</span></a>
+<a class="sourceLine" id="cb7-18" title="18">simfun &lt;-<span class="st"> </span><span class="cf">function</span>(nl, siminputrow, rndseed, <span class="dt">writeRDS=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb7-19" title="19">{</a>
+<a class="sourceLine" id="cb7-20" title="20">  unixtools<span class="op">::</span><span class="kw">set.tempdir</span>(<span class="st">&quot;/hpath/to/temp/dir&quot;</span>)</a>
+<a class="sourceLine" id="cb7-21" title="21">  <span class="kw">library</span>(nlrx)</a>
+<a class="sourceLine" id="cb7-22" title="22">  res &lt;-<span class="st"> </span><span class="kw">run_nl_one</span>(<span class="dt">nl =</span> nl, <span class="dt">siminputrow =</span> siminputrow, <span class="dt">seed =</span> rndseed)</a>
+<a class="sourceLine" id="cb7-23" title="23">  <span class="cf">if</span> (<span class="kw">isTRUE</span>(writeRDS))</a>
+<a class="sourceLine" id="cb7-24" title="24">  {</a>
+<a class="sourceLine" id="cb7-25" title="25">    <span class="kw">saveRDS</span>(res, <span class="dt">file=</span><span class="kw">file.path</span>(nl<span class="op">@</span>experiment<span class="op">@</span>outpath, <span class="kw">paste0</span>(<span class="st">&quot;nlrx_sim_&quot;</span>, siminputrow, <span class="st">&quot;_seed_&quot;</span>, rndseed, <span class="st">&quot;.rds&quot;</span>)))</a>
+<a class="sourceLine" id="cb7-26" title="26">  }</a>
+<a class="sourceLine" id="cb7-27" title="27">  <span class="kw">return</span>(res)</a>
+<a class="sourceLine" id="cb7-28" title="28">}</a>
+<a class="sourceLine" id="cb7-29" title="29"></a>
+<a class="sourceLine" id="cb7-30" title="30"><span class="co"># Fourth, use the Q function from the clustermq package to run the jobs on the HPC:</span></a>
+<a class="sourceLine" id="cb7-31" title="31"><span class="co"># The q function loops through our siminputrows and rndseeds vectors.</span></a>
+<a class="sourceLine" id="cb7-32" title="32"><span class="co"># The function creates njobs jobs and distributes corresponding chunks of the input vectors to these jobs for executing the simulation function simfun.</span></a>
+<a class="sourceLine" id="cb7-33" title="33"><span class="co"># As constants we provide our nl object and the function parameter writeRDS. </span></a>
+<a class="sourceLine" id="cb7-34" title="34"><span class="co"># If write RDS is true, an *.rds file will be written on the HPC after each jobs has finished.</span></a>
+<a class="sourceLine" id="cb7-35" title="35"><span class="co"># This can be useful to gain results from completed runs after a crash has occured.</span></a>
+<a class="sourceLine" id="cb7-36" title="36">results &lt;-<span class="st"> </span>clustermq<span class="op">::</span><span class="kw">Q</span>(<span class="dt">fun =</span> simfun, </a>
+<a class="sourceLine" id="cb7-37" title="37">                        <span class="dt">siminputrow =</span> siminputrows,</a>
+<a class="sourceLine" id="cb7-38" title="38">                        <span class="dt">rndseed =</span> rndseeds,</a>
+<a class="sourceLine" id="cb7-39" title="39">                        <span class="dt">const =</span> <span class="kw">list</span>(<span class="dt">nl =</span> nl,</a>
+<a class="sourceLine" id="cb7-40" title="40">                                     <span class="dt">writeRDS =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb7-41" title="41">                        <span class="dt">export =</span> <span class="kw">list</span>(), </a>
+<a class="sourceLine" id="cb7-42" title="42">                        <span class="dt">seed =</span> <span class="dv">42</span>, </a>
+<a class="sourceLine" id="cb7-43" title="43">                        <span class="dt">n_jobs =</span> njobs, </a>
+<a class="sourceLine" id="cb7-44" title="44">                        <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">job_name =</span> <span class="st">&quot;jobname&quot;</span>, <span class="co"># define jobname</span></a>
+<a class="sourceLine" id="cb7-45" title="45">                                        <span class="dt">log.file =</span> <span class="st">&quot;jobname.log&quot;</span>, <span class="co"># define logfile name</span></a>
+<a class="sourceLine" id="cb7-46" title="46">                                        <span class="dt">queue =</span> <span class="st">&quot;medium&quot;</span>,  <span class="co"># define HPC queue</span></a>
+<a class="sourceLine" id="cb7-47" title="47">                                        <span class="dt">service =</span> <span class="st">&quot;normal&quot;</span>, <span class="co"># define HPC service</span></a>
+<a class="sourceLine" id="cb7-48" title="48">                                        <span class="dt">walltime =</span> <span class="st">&quot;00:30:00&quot;</span>, <span class="co"># define walltime</span></a>
+<a class="sourceLine" id="cb7-49" title="49">                                        <span class="dt">mem_cpu =</span> <span class="st">&quot;4000&quot;</span>)) <span class="co"># define memory per cpu   </span></a>
+<a class="sourceLine" id="cb7-50" title="50"></a>
+<a class="sourceLine" id="cb7-51" title="51"><span class="co"># The Q function reports the individual results of each job as a list</span></a>
+<a class="sourceLine" id="cb7-52" title="52"><span class="co"># Thus, we convert the list results to tibble format:</span></a>
+<a class="sourceLine" id="cb7-53" title="53">results &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_rows</span>(results)</a></code></pre></div>
+</div>
+</div>
 </div>
 
 
