@@ -12,7 +12,7 @@ coverage](https://codecov.io/gh/ropensci/nlrx/branch/master/graph/badge.svg)](ht
 [![CRAN
 status](https://www.r-pkg.org/badges/version/nlrx)](https://cran.r-project.org/package=nlrx)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/nlrx)](https://cran.r-project.org/package=nlrx)
-[![ropensci](https://badges.ropensci.org/262_status.svg)](https://github.com/ropensci/onboarding/issues/262)
+[![ropensci](https://badges.ropensci.org/262_status.svg)](https://github.com/ropensci/software-review/issues/262)
 [![DOI:10.1111/2041-210X.13286](https://zenodo.org/badge/DOI/10.1111/2041-210X.13286.svg)](https://doi.org/10.1111/2041-210X.13286)
 
 The nlrx package provides tools to setup and execute NetLogo simulations
@@ -86,7 +86,7 @@ to install NetLogo on the local system.
 Because NetLogo is executed in a Java virtual machine, Java needs to be
 installed on the local/remote system as well. We recommend the [Oracle
 Java SE Development
-Kit 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+Kit 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
 or the [openjdk](https://github.com/ojdkbuild/ojdkbuild). While the nlrx
 package might work without setting the Java system path explicitly, we
 recommend to make sure that JAVA\_HOME points to the correct Java
@@ -249,7 +249,7 @@ analyze_nl(nl)
 ## Meta
 
   - Please [report any issues or
-    bugs](https://github.com/nldoc/nlrx/issues/new/).
+    bugs](https://github.com/ropensci/nlrx/issues/new).
   - License: GPL3
   - Get citation information for `nlrx` in R doing `citation(package =
     'nlrx')`

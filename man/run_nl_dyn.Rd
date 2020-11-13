@@ -4,8 +4,13 @@
 \alias{run_nl_dyn}
 \title{Execute NetLogo simulation without pregenerated parametersets}
 \usage{
-run_nl_dyn(nl, seed, cleanup.csv = TRUE, cleanup.xml = TRUE,
-  cleanup.bat = TRUE, silent = TRUE)
+run_nl_dyn(
+  nl,
+  seed,
+  cleanup.csv = TRUE,
+  cleanup.xml = TRUE,
+  cleanup.bat = TRUE
+)
 }
 \arguments{
 \item{nl}{nl object}
@@ -17,8 +22,6 @@ run_nl_dyn(nl, seed, cleanup.csv = TRUE, cleanup.xml = TRUE,
 \item{cleanup.xml}{TRUE/FALSE, if TRUE temporary created xml output files will be deleted after gathering results.}
 
 \item{cleanup.bat}{TRUE/FALSE, if TRUE temporary created bat/sh output files will be deleted after gathering results.}
-
-\item{silent}{TRUE/FALSE, if FALSE prints the current seed and siminputrow after successful execution of a simulation (only for sequential execution).}
 }
 \value{
 simulation output results can be tibble, list, ...

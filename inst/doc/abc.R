@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath=outpath,
 #                              repetition=1,
@@ -40,7 +40,7 @@ knitr::opts_chunk$set(
 #                                               "show-energy?" = "false"))
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign <- simdesign_ABCmcmc_Marjoram(nl=nl,
 #                                             summary_stat_target = c(100, 80),
 #                                             n_rec = 100,
@@ -49,7 +49,7 @@ knitr::opts_chunk$set(
 #                                             progress_bar = TRUE,
 #                                             nseeds = 1)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  post <- function(nl){
 #    res <- getsim(nl, "simoutput") %>%
 #      dplyr::select(getexp(nl, "metrics")) %>%
@@ -66,10 +66,10 @@ knitr::opts_chunk$set(
 #                                             progress_bar = TRUE,
 #                                             nseeds = 1)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results <- run_nl_dyn(nl, seed = nl@simdesign@simseeds[1])
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign@simoutput <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "ABCmcmc.rds"))
 #  
@@ -126,7 +126,7 @@ knitr::opts_chunk$set(
 #                          tidyr::unnest(cols=param)))
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -142,7 +142,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath=outpath,
 #                              repetition=1,
@@ -162,27 +162,27 @@ knitr::opts_chunk$set(
 #                                               "show-energy?" = "false"))
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign <- simdesign_lhs(nl,
 #                                samples=500,
 #                                nseeds=1,
 #                                precision=3)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results <- run_nl_all(nl)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign@simoutput <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "ABClhs.rds"))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  input <- getsim(nl, "siminput") %>%
 #    dplyr::select(names(getexp(nl, "variables")))
 #  output <- getsim(nl, "simoutput") %>%
 #    dplyr::select(getexp(nl, "metrics"))
 #  target <- c("count sheep"=100, "count wolves"=80)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results.abc.reject <- abc::abc(target=target,
 #                          param=input,
 #                          sumstat=output,
@@ -195,7 +195,7 @@ knitr::opts_chunk$set(
 #                                 tol=0.3,
 #                                 method="loclinear")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results.abc.all <- tibble::as_tibble(results.abc.reject$unadj.values) %>% # results from rejection method
 #    tidyr::gather(parameter, value) %>%
 #    dplyr::mutate(method="rejection") %>%

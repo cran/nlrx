@@ -1,34 +1,38 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----eval=FALSE----------------------------------------------------------
+## ----progress, eval=FALSE-----------------------------------------------------
+#  progressr::handlers("progress")
+#  results <- progressr::with_progress(run_nl_all(nl))
+
+## ----eval=FALSE---------------------------------------------------------------
 #  install.packages('unixtools', repos = 'http://www.rforge.net/')
 #  unixtools::set.tempdir("<path-to-temp-dir>")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  to-report green.patches
 #    report count patches with [pcolor = green]
 #  end
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(future)
 #  plan(multiprocess)
 #  results <- run_nl_all(nl = nl)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(future)
 #  plan(list(sequential, multiprocess))
 #  results %<-% run_nl_all(nl = nl)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(future)
 #  plan(multisession)
 #  results <- run_nl_all(nl = nl, split = 4)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # Load required packages
 #  library(future)
 #  library(future.batchtools)
@@ -59,7 +63,7 @@ knitr::opts_chunk$set(
 #  # Execute simulations
 #  results <- run_nl_all(nl = nl)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(clustermq)
 #  
 #  # First, we set the total number of jobs for the HPC
@@ -81,11 +85,7 @@ knitr::opts_chunk$set(
 #  {
 #    unixtools::set.tempdir("/hpath/to/temp/dir")
 #    library(nlrx)
-#    res <- run_nl_one(nl = nl, siminputrow = siminputrow, seed = rndseed)
-#    if (isTRUE(writeRDS))
-#    {
-#      saveRDS(res, file=file.path(nl@experiment@outpath, paste0("nlrx_sim_", siminputrow, "_seed_", rndseed, ".rds")))
-#    }
+#    res <- run_nl_one(nl = nl, siminputrow = siminputrow, seed = rndseed, writeRDS = TRUE)
 #    return(res)
 #  }
 #  

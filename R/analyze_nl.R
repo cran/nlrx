@@ -1,61 +1,3 @@
-#' Write attached NetLogo simulation output to file
-#'
-#' @description Write attached NetLogo simulation output to file
-#'
-#' @param nl nl object
-#' @param outpath optional path to directory where output is written
-#'
-#' Write NetLogo simulation output to a csv file in the directory outpath of the nl object
-#' Output has to be attached to the simdesign first with simoutput(nl) <- results
-#' The outpath argument can be optionally used to write output to a different directory than the defined outpath of the nl object.
-#'
-#' @examples
-#'
-#' # Load nl object including output data from testdata
-#' nl <- nl_lhs
-#'
-#' # Write output to outpath directory
-#' write_simoutput(nl, outpath=tempdir())
-#'
-#' @aliases write_simoutput
-#' @rdname write_simoutput
-#'
-#' @export
-
-write_simoutput <- function(nl, outpath=NA) {
-
-  # Set the outpath:
-  if (is.na(outpath)) {
-    outpath <- getexp(nl, "outpath")
-  }
-  # Check if directory exists:
-  if (!isTRUE(dir.exists(outpath))) {
-    stop(paste0(
-      "Error: Output directory ", outpath, " does not exist!"
-    ), call. = FALSE)
-  }
-
-  ## Check if results have been attached:
-  if (purrr::is_empty(getsim(nl, "simoutput"))) {
-    warning("Simoutput tibble is empty.
-In order to write_simoutput, output results have to be
-attached to the simdesign of the nl object first:
-setsim(nl, \"simoutput\") <- results")
-  }
-
-  # Create filename
-  outfilename <- file.path(
-    outpath,
-    paste0(getexp(nl, "expname"),
-    "_",
-    getsim(nl, "simmethod"),
-    ".csv"))
-
-  # Write output
-  readr::write_csv(x = getsim(nl, "simoutput"), path = outfilename)
-}
-
-
 #' Analyze NetLogo simulation output
 #'
 #' @description Analyze NetLogo simulation output
@@ -205,6 +147,8 @@ analyze_simple <- function(nl, metrics, funs) {
 #' @keywords internal
 analyze_ff <- function(nl, metrics, funs) {
 
+  eval_simoutput(nl)
+
   ## For ff we compute mean and sd values of each run/tick combination:
   ffagg <- getsim(nl, "simoutput") %>%
     dplyr::group_by_at(dplyr::vars(
@@ -236,6 +180,8 @@ analyze_ff <- function(nl, metrics, funs) {
 #' @keywords internal
 analyze_lhs <- function(nl, metrics, funs) {
 
+  eval_simoutput(nl)
+
   ## For lhs we compute mean and sd values of each run/tick combination:
   lhsagg <- getsim(nl, "simoutput") %>%
     dplyr::group_by_at(dplyr::vars(
@@ -266,6 +212,9 @@ analyze_lhs <- function(nl, metrics, funs) {
 #' @rdname analyze_sobol
 #' @keywords internal
 analyze_sobol <- function(nl, metrics, funs) {
+
+  eval_simoutput(nl)
+
   sensindex <- NULL
   so <- getsim(nl, "simobject")[[1]]
 
@@ -319,6 +268,8 @@ analyze_sobol <- function(nl, metrics, funs) {
 #' @rdname analyze_sobol2007
 #' @keywords internal
 analyze_sobol2007 <- function(nl, metrics, funs) {
+
+  eval_simoutput(nl)
 
   sensindex <- NULL
   so <- getsim(nl, "simobject")[[1]]
@@ -382,6 +333,9 @@ analyze_sobol2007 <- function(nl, metrics, funs) {
 #' @rdname analyze_soboljansen
 #' @keywords internal
 analyze_soboljansen <- function(nl, metrics, funs) {
+
+  eval_simoutput(nl)
+
   sensindex <- NULL
   so <- getsim(nl, "simobject")[[1]]
 
@@ -445,7 +399,11 @@ analyze_soboljansen <- function(nl, metrics, funs) {
 #' @rdname analyze_morris
 #' @keywords internal
 analyze_morris <- function(nl, metrics, funs) {
+
+  eval_simoutput(nl)
+
   sensindex <- NULL
+  na.discovered <- FALSE
   mo <- getsim(nl, "simobject")[[1]]
 
   # Calculate sensitivity indices separately for each random seed:
@@ -467,30 +425,42 @@ analyze_morris <- function(nl, metrics, funs) {
     for (j in seq_len(nrow(simoutput.i))) {
       sensitivity::tell(mo, simoutput.i[j, ])
 
+      if (anyNA(mo$ee))
+      {
+        na.discovered <- TRUE
+      }
+
+
       mustar <- tibble::tibble(
         metric = metrics[j],
         parameter = colnames(mo$ee),
         index = "mustar",
-        value = apply(mo$ee, 2, function(x) mean(abs(x))),
+        value = apply(mo$ee, 2, function(x) mean(abs(x), na.rm=TRUE)),
         seed = i
       )
       mu <- tibble::tibble(
         metric = metrics[j],
         parameter = colnames(mo$ee),
         index = "mu",
-        value = apply(mo$ee, 2, mean),
+        value = apply(mo$ee, 2, function(x) mean(x, na.rm=TRUE)),
         seed = i
       )
       sigma <- tibble::tibble(
         metric = metrics[j],
         parameter = colnames(mo$ee),
         index = "sigma",
-        value = apply(mo$ee, 2, stats::sd),
+        value = apply(mo$ee, 2, function(x) stats::sd(x, na.rm=TRUE)),
         seed = i
       )
 
       sensindex <- rbind(sensindex, mustar, mu, sigma)
     }
+  }
+
+  # Print warning if NAs were discovered:
+  if (isTRUE(na.discovered))
+  {
+    warning("NAs were discovered in the simulation output data during morris index calculation!")
   }
 
   # Remove rownames
@@ -516,6 +486,9 @@ analyze_morris <- function(nl, metrics, funs) {
 #' @rdname analyze_eFast
 #' @keywords internal
 analyze_eFast <- function(nl, metrics, funs) {
+
+  eval_simoutput(nl)
+
   sensindex <- NULL
   f99 <- getsim(nl, "simobject")[[1]]
 

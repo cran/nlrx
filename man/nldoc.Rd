@@ -4,9 +4,18 @@
 \alias{nldoc}
 \title{Create NetLogo documentation}
 \usage{
-nldoc(modelfiles, outpath, infotab = TRUE, gui = TRUE, bs = TRUE,
-  output_format = "html", number_sections = TRUE, theme = "journal",
-  date = today(), toc = TRUE)
+nldoc(
+  modelfiles,
+  outpath,
+  infotab = TRUE,
+  gui = TRUE,
+  bs = TRUE,
+  output_format = "html",
+  number_sections = TRUE,
+  theme = "journal",
+  date = today(),
+  toc = TRUE
+)
 }
 \arguments{
 \item{modelfiles}{vector of filepaths to model files}
@@ -42,6 +51,7 @@ If needed, tables of gui elements and behavior space experiments are added to th
 Finally, the document is rendered in the specified format.
 }
 \examples{
+\dontrun{
 
 # List model files (.nls subfiles are also supported)
 modelfiles <- c("https://raw.githubusercontent.com/nldoc/nldoc_pg/master/WSP.nlogo",
@@ -61,5 +71,6 @@ nldoc(modelfiles = modelfiles,
       theme = "cosmo",
       date = date(),
       toc = TRUE)
+}
 
 }

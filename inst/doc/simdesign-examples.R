@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,
@@ -46,7 +46,7 @@ knitr::opts_chunk$set(
 #  nl@simdesign <- simdesign_simple(nl=nl,
 #                                   nseeds=3)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,
@@ -71,7 +71,7 @@ knitr::opts_chunk$set(
 #  nl@simdesign <- simdesign_distinct(nl=nl,
 #                                     nseeds=3)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,
@@ -96,7 +96,7 @@ knitr::opts_chunk$set(
 #  nl@simdesign <- simdesign_ff(nl=nl,
 #                               nseeds=3)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,
@@ -124,7 +124,7 @@ knitr::opts_chunk$set(
 #                                 precision=3)
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,
@@ -186,7 +186,7 @@ knitr::opts_chunk$set(
 #                                   samples=100,
 #                                   nseeds=3)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,
@@ -223,7 +223,7 @@ knitr::opts_chunk$set(
 #                                  nseeds=1)
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep",
 #                              outpath="C:/out/",
 #                              repetition=1,

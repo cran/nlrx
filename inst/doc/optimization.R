@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep-GenSA1",
 #                              outpath=outpath,
 #                              repetition=1,
@@ -40,24 +40,24 @@ knitr::opts_chunk$set(
 #                                               "show-energy?" = "false"))
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign <- simdesign_GenSA(nl,
 #                                  evalcrit = 1,
 #                                  nseeds = 1,
 #                                  control=list(maxit = 20))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results <- run_nl_dyn(nl, seed = nl@simdesign@simseeds[1])
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign@simoutput <- tibble::enframe(results)
 #  saveRDS(nl, file.path(nl@experiment@outpath, "genSA_1.rds"))
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -73,7 +73,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname="wolf-sheep-GenSA2",
 #                              outpath=outpath,
 #                              repetition=1,
@@ -93,7 +93,7 @@ knitr::opts_chunk$set(
 #                                               "show-energy?" = "false"))
 #  
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  critfun <- function(nl) {
 #    library(landscapemetrics)
 #    res_spat <- nl_to_raster(nl)
@@ -103,19 +103,19 @@ knitr::opts_chunk$set(
 #    return(crit)
 #  }
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign <- simdesign_GenSA(nl,
 #                                  evalcrit = critfun,
 #                                  nseeds = 1,
 #                                  control=list(maxit = 20))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results <- run_nl_dyn(nl, seed = nl@simdesign@simseeds[1])
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  results
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign@simoutput <- tibble::enframe(results)
 #  saveRDS(nl, file.path(nl@experiment@outpath, "genSA_2.rds"))
 #  

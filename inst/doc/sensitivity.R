@@ -1,10 +1,10 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname = "wolf-sheep-morris",
 #                              outpath = outpath,
 #                              repetition = 1,
@@ -40,7 +40,7 @@ knitr::opts_chunk$set(
 #                              constants = list("model-version" = "\"sheep-wolves-grass\"",
 #                                               "show-energy?" = "false"))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign <- simdesign_morris(nl=nl,
 #                                   morristype="oat",
 #                                   morrislevels=4,
@@ -48,19 +48,19 @@ knitr::opts_chunk$set(
 #                                   morrisgridjump=2,
 #                                   nseeds=5)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(future)
 #  plan(multisession)
 #  results <- run_nl_all(nl)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign@simoutput <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "morris.rds"))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  morris <- analyze_nl(nl)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(nlrx)
 #  # Windows default NetLogo installation path (adjust to your needs!):
 #  netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
@@ -76,7 +76,7 @@ knitr::opts_chunk$set(
 #           modelpath = modelpath,
 #           jvmmem = 1024)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@experiment <- experiment(expname = "wolf-sheep-morris",
 #                              outpath = outpath,
 #                              repetition = 1,
@@ -95,19 +95,19 @@ knitr::opts_chunk$set(
 #                              constants = list("model-version" = "\"sheep-wolves-grass\"",
 #                                               "show-energy?" = "false"))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign <- simdesign_lhs(nl, samples=500, nseeds=1, precision=3)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(future)
 #  plan(multisession)
 #  results <- run_nl_all(nl, split=10)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  nl@simdesign@simoutput <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "lhs.rds"))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(tidyverse)
 #  input <- getsim(nl, "siminput") %>%    # Take input parameter matrix
 #    dplyr::select(names(getexp(nl, "variables"))) %>%  # Select variable parameters only
@@ -124,10 +124,10 @@ knitr::opts_chunk$set(
 #  pcc.result <- purrr::map(names(output), function(x) sensitivity::pcc(X=input, y=output[,x], nboot = 100, rank = FALSE))
 #  src.result <- purrr::map(names(output), function(x) sensitivity::src(X=input, y=output[,x], nboot = 100, rank = FALSE))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  plot(pcc.result[[1]])
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  pcc.result.tidy <- purrr::map_dfr(seq_along(pcc.result), function(x) {
 #    pcc.result[[x]]$PCC %>%
 #      tibble::rownames_to_column(var="parameter") %>%

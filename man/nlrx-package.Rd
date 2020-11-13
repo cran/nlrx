@@ -56,7 +56,7 @@ Details on the specific slots of the experiment class can be found in the packag
                              metrics=c("count sheep", "count wolves", "count patches with [pcolor = green]"),
                              variables = list('initial-number-sheep' = list(min=50, max=150, qfun="qunif"),
                                               'initial-number-wolves' = list(min=50, max=150, qfun="qunif")),
-                             constants = list("model-version" = "\"sheep-wolves-grass\"",
+                             constants = list("model-version" = "\\"sheep-wolves-grass\\"",
                                               "grass-regrowth-time" = 30,
                                               "sheep-gain-from-food" = 4,
                                               "wolf-gain-from-food" = 20,
@@ -101,7 +101,7 @@ analyze_nl(nl)
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://docs.ropensci.org/nlrx}
+  \item \url{https://docs.ropensci.org/nlrx/}
   \item \url{https://github.com/ropensci/nlrx/}
   \item Report bugs at \url{https://github.com/ropensci/nlrx/issues/}
 }
