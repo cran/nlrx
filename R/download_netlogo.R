@@ -8,6 +8,7 @@
 #' @details
 #'
 #' Supported Versions for Download and Usage (parameter `version`):
+#' * "6.2.0" = NetLogo Version 6.2.0
 #' * "6.1.1" = NetLogo Version 6.1.1
 #' * "6.1.0" = NetLogo Version 6.1.0
 #' * "6.0.4" = NetLogo Version 6.0.4
@@ -19,7 +20,7 @@
 #'
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' dlpath <- tempdir()  # adjust path to your needs
 #' try(download_netlogo(dlpath, "6.0.3"))
 #' }
@@ -32,6 +33,9 @@
 
 download_netlogo <- function(to, version, extract = FALSE) {
   switch(version,
+    "6.2.0" = {
+      nl_url <- "https://ccl.northwestern.edu/netlogo/6.2.0/"
+    },
     "6.1.1" = {
      nl_url <- "https://ccl.northwestern.edu/netlogo/6.1.1/"
     },

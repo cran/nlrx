@@ -1,25 +1,40 @@
-#' Read NetLogo GUI elements from files
+#' Report globals from a NetLogo model that is defined within a nl object
 #'
-#' @description Read NetLogo GUI elements from files
+#' @description Report globals from a NetLogo model that is defined within a nl
+#'  object
 #'
-#' @param modelfiles vector of filepaths to model files
-#'
-#' @return list containing NetLogo GUI elements
+#' @param nl nl object with a defined modelpath that points to a NetLogo model
+#'  (*.nlogo)
 #'
 #' @details
 #'
-#' The procedure reads text from the provided model files and reports a list of GUI elements.
+#' The function reads the NetLogo model file that is defined within the nl object
+#'  and reports all global parameters that are defined as widget elements on
+#'  the GUI of the NetLogo model.
+#' Only globals that are found by this function are valid globals that can be
+#'  entered into the variables or constants vector of an experiment object.
 #'
-#' @aliases nldoc_table_gui
-#' @rdname nldoc_table_gui
-#' @keywords internal
-nldoc_table_gui <- function(modelfiles) {
+#'
+#' @examples
+#' \dontrun{
+#' nl <- nl_lhs
+#' report_model_parameters(nl)
+#' }
+#'
+#' @aliases report_model_parameters
+#' @rdname report_model_parameters
+#'
+#' @export
 
-  ## Filter file names for main model file:
-  modelpath <- modelfiles[grepl(pattern=".nlogo", modelfiles)]
+report_model_parameters <- function(nl) {
+
+  ## Check if model exists:
+  if(!file.exists(nl@modelpath)){
+    stop("nl@modelpath does not exist on local file system. Cannot report model parameters!")
+  }
 
   ## Open the model as string
-  model.code <- readLines(modelpath)
+  model.code <- readLines(getnl(nl, "modelpath"))
 
   ## Find the line in the NetLogoCode where the interface definiton starts
   ## (separator: @#$#@#$#@)
@@ -99,3 +114,4 @@ nldoc_table_gui <- function(modelfiles) {
 
   return(modelparam)
 }
+

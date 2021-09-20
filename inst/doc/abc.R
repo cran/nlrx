@@ -70,7 +70,7 @@ knitr::opts_chunk$set(
 #  results <- run_nl_dyn(nl, seed = nl@simdesign@simseeds[1])
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  nl@simdesign@simoutput <- results
+#  setsim(nl, "simoutput") <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "ABCmcmc.rds"))
 #  
 #  ## Calculate descriptive statistics
@@ -172,7 +172,7 @@ knitr::opts_chunk$set(
 #  results <- run_nl_all(nl)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  nl@simdesign@simoutput <- results
+#  setsim(nl, "simoutput") <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "ABClhs.rds"))
 
 ## ----eval=FALSE---------------------------------------------------------------

@@ -47,6 +47,11 @@ knitr::opts_chunk$set(
 #                                 precision=3)
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # Evaluate nl object:
+#  eval_variables_constants(nl)
+#  print(nl)
+#  
+#  # Run all simulations (loop over all siminputrows and simseeds)
 #  results <- run_nl_all(nl)
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -102,7 +107,11 @@ knitr::opts_chunk$set(
 #                                 nseeds=3,
 #                                 precision=3)
 #  
-#  # Execute simulations
+#  # Evaluate nl object:
+#  eval_variables_constants(nl)
+#  print(nl)
+#  
+#  # Run all simulations (loop over all siminputrows and simseeds)
 #  results <- run_nl_all(nl)
 #  
 #  # Attach results to nl object:

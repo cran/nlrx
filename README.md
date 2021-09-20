@@ -3,17 +3,22 @@
 
 # nlrx <img src="man/figures/logo.png" align="right" width="150" />
 
-[![Build
-Status](https://travis-ci.org/ropensci/nlrx.svg?branch=master)](https://travis-ci.org/ropensci/nlrx)[![Build
-status](https://ci.appveyor.com/api/projects/status/swsstjxxjnkyuoh9/branch/master?svg=true)](https://ci.appveyor.com/project/marcosci/nlrx/branch/master)
+<!-- old badges: [![Build Status](https://travis-ci.org/ropensci/nlrx.svg?branch=master)](https://travis-ci.org/ropensci/nlrx)[
+![Build status](https://ci.appveyor.com/api/projects/status/swsstjxxjnkyuoh9/branch/master?svg=true)](https://ci.appveyor.com/project/marcosci/nlrx/branch/master) -->
+
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/ropensci/nlrx/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/nlrx/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/nlrx/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/nlrx)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/nlrx)](https://cran.r-project.org/package=nlrx)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/nlrx)](https://cran.r-project.org/package=nlrx)
 [![ropensci](https://badges.ropensci.org/262_status.svg)](https://github.com/ropensci/software-review/issues/262)
 [![DOI:10.1111/2041-210X.13286](https://zenodo.org/badge/DOI/10.1111/2041-210X.13286.svg)](https://doi.org/10.1111/2041-210X.13286)
+<!-- badges: end -->
 
 The nlrx package provides tools to setup and execute NetLogo simulations
 from R. NetLogo is a free, open-source and cross-platform modelling
@@ -79,7 +84,10 @@ be installed on remote machines as well. The nlrx package provides a
 utility function (`download_netlogo()`) that can be used to download and
 unzip (only unix systems) a specified NetLogo version to a local folder.
 For windows machines, the downloaded file needs to be executed in order
-to install NetLogo on the local system.
+to install NetLogo on the local system. If you are running MacOS, please
+use the Linux tar.gz version of NetLogo (either from the NetLogo
+Homepage or by using the `download_netlogo()` function). The dmg version
+from the NetLogo homepage is not compatible with nlrx.
 
 ### Java
 
@@ -104,8 +112,8 @@ install.packages("nlrx")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ropensci/nlrx")
+# install.packages("remotes")
+remotes::install_github("ropensci/nlrx")
 ```
 
 ## Get started
@@ -217,9 +225,19 @@ specific simulation from the siminput parameter table. The
 parameter input table siminput. The loops are constructed in a way that
 allows easy parallelisation, either locally or on remote HPC machines
 (see “Advanced configuration” vignette for more information on
-parallelisation).
+parallelisation). Before running your simulations you might want to
+check your current nl object setup. `eval_variables_constants(nl)`
+evaluates if the defined variables and constants are correctly defined
+and are consistent with the attached model. `print(nl)` prints a
+complete summary of the provided nl object including checkmarks that
+might help to indicate potential problems.
 
 ``` r
+# Evaluate nl object:
+eval_variables_constants(nl)
+print(nl)
+
+# Run all simulations (loop over all siminputrows and simseeds)
 results <- run_nl_all(nl)
 ```
 

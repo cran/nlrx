@@ -54,7 +54,7 @@ knitr::opts_chunk$set(
 #  results <- run_nl_all(nl)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  nl@simdesign@simoutput <- results
+#  setsim(nl, "simoutput") <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "morris.rds"))
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -104,7 +104,7 @@ knitr::opts_chunk$set(
 #  results <- run_nl_all(nl, split=10)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  nl@simdesign@simoutput <- results
+#  setsim(nl, "simoutput") <- results
 #  saveRDS(nl, file.path(nl@experiment@outpath, "lhs.rds"))
 
 ## ----eval=FALSE---------------------------------------------------------------

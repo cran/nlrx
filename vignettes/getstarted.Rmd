@@ -41,7 +41,7 @@ Get citation information for `nlrx` in R doing `citation(package = 'nlrx')`.
 ## Prerequirements
 
 ### NetLogo
-In order to use the nlrx package, [NetLogo](http://netlogoweb.org/) (>=5.3.1) needs to be installed on the system that is used to execute model simulations (local/remote). For remote execution, NetLogo needs to be installed on remote machines as well. The nlrx package provides a utility function (`download_netlogo()`) that can be used to download and unzip (only unix systems) a specified NetLogo version to a local folder. For windows machines, the downloaded file needs to be executed in order to install NetLogo on the local system.
+In order to use the nlrx package, [NetLogo](http://netlogoweb.org/) (>=5.3.1) needs to be installed on the system that is used to execute model simulations (local/remote). For remote execution, NetLogo needs to be installed on remote machines as well. The nlrx package provides a utility function (`download_netlogo()`) that can be used to download and unzip (only unix systems) a specified NetLogo version to a local folder. For windows machines, the downloaded file needs to be executed in order to install NetLogo on the local system. If you are running MacOS, please use the Linux tar.gz version of NetLogo (either from the NetLogo Homepage or by using the `download_netlogo()` function). The dmg version from the NetLogo homepage is not compatible with nlrx.
 
 ### Java
 Because NetLogo is executed in a Java virtual machine, Java needs to be installed on the local/remote system as well. We recommend the [Oracle Java SE Development Kit 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) or the [openjdk](https://github.com/ojdkbuild/ojdkbuild).
@@ -58,8 +58,8 @@ install.packages("nlrx")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ropensci/nlrx")
+# install.packages("remotes")
+remotes::install_github("ropensci/nlrx")
 ```
 
 ## Get started
@@ -139,8 +139,15 @@ All information that is needed to run the simulations is now stored within the n
 The `run_nl_one()` function allows to run one specific simulation from the siminput parameter table.
 The `run_nl_all()` function runs a loop over all simseeds and rows of the parameter input table siminput.
 The loops are constructed in a way that allows easy parallelisation, either locally or on remote HPC machines (see "Advanced configuration" vignette for more information on parallelisation).
+Before running your simulations you might want to check your current nl object setup. `eval_variables_constants(nl)` evaluates if the defined variables and constants are correctly defined and are consistent with the attached model. `print(nl)` prints a complete summary of the provided nl object including checkmarks that might help to indicate potential problems.
+
 
 ```{r eval=FALSE}
+# Evaluate nl object:
+eval_variables_constants(nl)
+print(nl)
+
+# Run all simulations (loop over all siminputrows and simseeds)
 results <- run_nl_all(nl)
 ```
 
@@ -210,7 +217,11 @@ nl@simdesign <- simdesign_lhs(nl=nl,
                                nseeds=3,
                                precision=3)
 
-# Execute simulations
+# Evaluate nl object:
+eval_variables_constants(nl)
+print(nl)
+
+# Run all simulations (loop over all siminputrows and simseeds)
 results <- run_nl_all(nl)
 
 # Attach results to nl object:

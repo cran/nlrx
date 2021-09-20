@@ -53,7 +53,7 @@ knitr::opts_chunk$set(
 #  results
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  nl@simdesign@simoutput <- tibble::enframe(results)
+#  setsim(nl, "simoutput") <- tibble::enframe(results)
 #  saveRDS(nl, file.path(nl@experiment@outpath, "genSA_1.rds"))
 #  
 
@@ -116,7 +116,7 @@ knitr::opts_chunk$set(
 #  results
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  nl@simdesign@simoutput <- tibble::enframe(results)
+#  setsim(nl, "simoutput") <- tibble::enframe(results)
 #  saveRDS(nl, file.path(nl@experiment@outpath, "genSA_2.rds"))
 #  
 
