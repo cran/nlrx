@@ -12,29 +12,42 @@
 
 <meta name="author" content="Jan Salecker" />
 
-<meta name="date" content="2021-09-17" />
+<meta name="date" content="2023-05-16" />
 
 <title>Advanced configuration</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -52,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -109,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -127,7 +146,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -141,14 +340,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Advanced configuration</h1>
 <h4 class="author">Jan Salecker</h4>
-<h4 class="date">2021-09-17</h4>
+<h4 class="date">2023-05-16</h4>
 
 
 
 <div id="variables-and-constants-definitions" class="section level2">
 <h2>Variables and constants definitions</h2>
-<p>Correctly defining variables within the experiment class object is crucial for creating simdesigns. The implemented simdesigns have different requirements for variable definitions:</p>
+<p>Correctly defining variables within the experiment class object is
+crucial for creating simdesigns. The implemented simdesigns have
+different requirements for variable definitions:</p>
 <table>
+<colgroup>
+<col width="28%" />
+<col width="53%" />
+<col width="17%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Simdesign</th>
@@ -229,110 +435,324 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Additionally, please note the following restrictions in order to define variables and constants correctly:</p>
+<p>Additionally, please note the following restrictions in order to
+define variables and constants correctly:</p>
 <ul>
-<li>Categorical variable values are currently only allowed for simdesign_simple, simdesign_distinct and simdesign_ff.</li>
-<li>Variable values that should be recognized by NetLogo as strings need to be nested inside escaped quotes (e.g. <code>&quot;\\&quot;string\\&quot;&quot;</code>).</li>
-<li>Variable values that should be recognized by NetLogo as logical need to be entered as strings (e.g. <code>&quot;false&quot;</code>).</li>
-<li>It is not allowed to list the same variable in the variables and constants list.</li>
-<li>NetLogo model parameters that are not listed in any of these two lists will be set with their default value from the NetLogo model interface.</li>
-<li>simdesign_simple() requires at least one defined constant within the constants list. If your model does not have any globals (GUI and code), please create a dummy global (either create a global widget on the GUI or add a dummy variable to the globals[] code section) for your model and put it in the constants list with an appropriate value.</li>
+<li>Categorical variable values are currently only allowed for
+simdesign_simple, simdesign_distinct and simdesign_ff.</li>
+<li>Variable values that should be recognized by NetLogo as strings need
+to be nested inside escaped quotes
+(e.g. <code>&quot;\&quot;string\&quot;&quot;</code>).</li>
+<li>Variable values that should be recognized by NetLogo as logical need
+to be entered as strings (e.g. <code>&quot;false&quot;</code>).</li>
+<li>It is not allowed to list the same variable in the variables and
+constants list.</li>
+<li>NetLogo model parameters that are not listed in any of these two
+lists will be set with their default value from the NetLogo model
+interface.</li>
+<li>simdesign_simple() requires at least one defined constant within the
+constants list. If your model does not have any globals (GUI and code),
+please create a dummy global (either create a global widget on the GUI
+or add a dummy variable to the globals[] code section) for your model
+and put it in the constants list with an appropriate value.</li>
 </ul>
-<p>A complete list of all valid NetLogo parameters can be loaded by commiting a nl object with a valid modelpath to the function <code>report_model_parameters()</code>. This function reads all GUI elements of the NetLogo model that can be set by nlrx. After attaching an experiment to an nl object, validity of defined experiment variables and constants can be checked by commiting the nl object to the function <code>eval_variables_constants()</code>. The function will report detailed warnings or error messages, if definitions of variables or constants are invalid.</p>
+<p>A complete list of all valid NetLogo parameters can be loaded by
+committing a nl object with a valid modelpath to the function
+<code>report_model_parameters()</code>. This function reads all GUI
+elements of the NetLogo model that can be set by nlrx. After attaching
+an experiment to an nl object, validity of defined experiment variables
+and constants can be checked by commiting the nl object to the function
+<code>eval_variables_constants()</code>. The function will report
+detailed warnings or error messages, if definitions of variables or
+constants are invalid.</p>
 </div>
 <div id="print-functions" class="section level2">
 <h2>Print functions</h2>
-<p><code>print(nl)</code> can be used with any nl class object. The function will print a formatted overview of class contents to the console. The function will also print a short summary checklist that may be helpful for debugging certain issues. Depending on the simdesign, the summary table also prints the estimated number of runs.</p>
+<p><code>print(nl)</code> can be used with any nl class object. The
+function will print a formatted overview of class contents to the
+console. The function will also print a short summary checklist that may
+be helpful for debugging certain issues. Depending on the simdesign, the
+summary table also prints the estimated number of runs.</p>
 </div>
 <div id="capturing-progress-of-model-simulations" class="section level2">
 <h2>Capturing progress of model simulations</h2>
-<p>The <code>run_nl_all()</code> function supports the <a href="https://github.com/HenrikBengtsson/progressr">progressr</a> framework for capturing progress of simulations. Following this logic, the function itself will be silent unless it is wrapped within a <code>progressr::with_progress()</code> call. By using different handlers, the layout of the progress bar is different. For example, installing the package <a href="https://github.com/r-lib/progress">progress</a> and using the handler <code>progressr::handlers(&quot;progress&quot;)</code> will additionally print the current row and seed of the parameter matrix. For example, to run a nl parameter matrix with progress bar one can do:</p>
+<p>The <code>run_nl_all()</code> function supports the <a href="https://github.com/HenrikBengtsson/progressr">progressr</a>
+framework for capturing progress of simulations. Following this logic,
+the function itself will be silent unless it is wrapped within a
+<code>progressr::with_progress()</code> call. By using different
+handlers, the layout of the progress bar is different. For example,
+installing the package <a href="https://github.com/r-lib/progress">progress</a> and using the
+handler <code>progressr::handlers(&quot;progress&quot;)</code> will additionally
+print the current row and seed of the parameter matrix. For example, to
+run a nl parameter matrix with progress bar one can do:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>progressr<span class="sc">::</span><span class="fu">handlers</span>(<span class="st">&quot;progress&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> progressr<span class="sc">::</span><span class="fu">with_progress</span>(<span class="fu">run_nl_all</span>(nl))</span></code></pre></div>
-<p>The <code>run_nl_dyn()</code> function might provide progress output depending on the chosen method (for example ABC offers a progress bar). However, dynamic experiments are difficult to track because it is not clear how long the complete experiment will take from the beginning.</p>
-<p>The <code>run_nl_one()</code> does not report any progress because it only executes one simulation.</p>
-<p>In addition, NetLogo print commands are redirected to the R console. Thus, print commands can be used within the NetLogo model code to display the current progress of simulations in the R console. Another possibility is, to define a print reporter procedure in the experiment slot “idfinal” that is executed at the end of each simulation.</p>
-<p>Capturing output from multiple processes in parallelized environments to one R console is not straightforward. If such functionality is needed, we suggest to write the current progress to an output file directly from NetLogo (for example using the idrunnum functionality of nlrx, see section “Notes on self-written output”). These output files can then be monitored to capture the progress of the parallelized model executions.</p>
+<p>The <code>run_nl_dyn()</code> function might provide progress output
+depending on the chosen method (for example ABC offers a progress bar).
+However, dynamic experiments are difficult to track because it is not
+clear how long the complete experiment will take from the beginning.</p>
+<p>The <code>run_nl_one()</code> does not report any progress because it
+only executes one simulation.</p>
+<p>In addition, NetLogo print commands are redirected to the R console.
+Thus, print commands can be used within the NetLogo model code to
+display the current progress of simulations in the R console. Another
+possibility is, to define a print reporter procedure in the experiment
+slot “idfinal” that is executed at the end of each simulation.</p>
+<p>Capturing output from multiple processes in parallelized environments
+to one R console is not straightforward. If such functionality is
+needed, we suggest to write the current progress to an output file
+directly from NetLogo (for example using the idrunnum functionality of
+nlrx, see section “Notes on self-written output”). These output files
+can then be monitored to capture the progress of the parallelized model
+executions.</p>
+</div>
+<div id="access-to-intermediate-results" class="section level2">
+<h2>Access to intermediate results</h2>
+<p>For long-running experiments and simdesigns, it may be beneficial to
+gain access to intermediate results. This is especially useful to obtain
+results of successful runs, even if the R session crashes or gets
+stalled. The <code>run_all_all()</code> and <code>run_nl_one()</code>
+functions provide a parameter <code>writeRDS</code>. If this is set to
+<code>TRUE</code>, a rds file, carrying the current seed and siminputrow
+will be written to the specified <code>outpath</code> of the nl object
+experiment. Please note, that in case of the <code>run_all_all()</code>
+function, a huge number of rds files may be written to your disk (check
+<code>print(nl)</code> to get an estimated number of runs/files) which
+may cause other issues.</p>
+<p>Another option to get intermediate results, is to split-up the job
+into smaller chunks. E.g. one could create a loop around the
+<code>run_nl_all()</code> and in each iteration only use part of the
+<code>nl@simdesign@siminput</code> tibble (temporary overwrite the
+<code>nl@simdesign@siminput</code> tibble with a copy that only contains
+a specific slice of the parameter matrix). Then after each iteration,
+one can write the results of the complete chunk as an rds file to disk.
+Another option would be to create an outer loop around the
+<code>run_nl_all()</code> using the random seeds from the
+<code>nl@simdesign@simseeds</code> slot. Then, within each loop
+iteration the <code>nl@simdesign@simseeds</code> slot would be
+overwritten with the seed from the current loop iteration before the nl
+object is passed to <code>run_nl_all()</code> (don’t forget to adjust
+the split parameter in case of parallel execution). Then again, after
+each iteration, one can write the results of the complete chunk as an
+rds file to disk.</p>
+<p>To collect the intermediate results, simply read all rds files from
+the outpath in a loop and combine the tibbles, for example by using
+<code>dplyr::bind_rows()</code>.</p>
 </div>
 <div id="handling-netlogo-runtime-errors" class="section level2">
 <h2>Handling NetLogo runtime errors</h2>
-<p>Usually, runtime errors of NetLogo model simulations are printed to the R console and the current execution of <code>run_nl_all()</code>, <code>run_nl_one()</code> or <code>run_nl_dyn()</code> breaks. However, it can happen that a model simulation freezes due to Java runtime errors. Unfortunately it is not possible to terminate the Java virtual machine or print an error message to the console after such a runtime error occurred. The current R session and the freezed Java Virtual Machine need to be terminated manually. Thus, NetLogo models should be debugged in NetLogo prior to execution of large experiments with nlrx. Capturing progress of model simulations (see section “Capturing progress of model simulations”) might help in debugging runtime errors that freeze the Java Virtual Machine.</p>
+<p>Usually, runtime errors of NetLogo model simulations are printed to
+the R console and the current execution of <code>run_nl_all()</code>,
+<code>run_nl_one()</code> or <code>run_nl_dyn()</code> breaks. However,
+it can happen that a model simulation freezes due to Java runtime
+errors. Unfortunately it is not possible to terminate the Java virtual
+machine or print an error message to the console after such a runtime
+error occurred. The current R session and the frozen Java Virtual
+Machine need to be terminated manually. Thus, NetLogo models should be
+debugged in NetLogo prior to execution of large experiments with nlrx.
+Capturing progress of model simulations (see section “Capturing progress
+of model simulations”) might help in debugging runtime errors that
+freeze the Java Virtual Machine.</p>
 </div>
 <div id="self-written-netlogo-output" class="section level2">
 <h2>Self-written NetLogo output</h2>
-<p>The experiment provides a slot called “idrunnum”. This slot can be used to transfer the current nlrx experiment name, random seed and runnumber (siminputrow) to NetLogo. To use this functionality, a string input field widget needs to be created on the GUI of your NetLogo model. The name of this widget can be entered into the “idrunnum” field of the experiment. During simulations, the value of this widget is automatically updated with a generated string that contains the current nlrx experiment name, random seed and siminputrow (“expname_seed_siminputrow”). For self-written output In NetLogo, we suggest to include this global variable which allows referencing the self-written output files to the collected output of the nlrx simulations in R.</p>
+<p>The experiment provides a slot called “idrunnum”. This slot can be
+used to transfer the current nlrx experiment name, random seed and
+runnumber (siminputrow) to NetLogo. To use this functionality, a string
+input field widget needs to be created on the GUI of your NetLogo model.
+The name of this widget can be entered into the “idrunnum” field of the
+experiment. During simulations, the value of this widget is
+automatically updated with a generated string that contains the current
+nlrx experiment name, random seed and siminputrow
+(“expname_seed_siminputrow”). For self-written output In NetLogo, we
+suggest to include this global variable which allows referencing the
+self-written output files to the collected output of the nlrx
+simulations in R.</p>
 </div>
 <div id="temporary-files-management" class="section level2">
 <h2>Temporary files management</h2>
-<p>nlrx uses temporary files to store experiment xml files, commandline batch files to start NetLogo simulations and csv output files. These temporary files are stored in the default temporary files directory of the R session. By default, these files are deleted after each simulation run. However, if it is needed to look at this files, automatic deletion of temporary files can be disabled by setting the corresponding cleanup parameters in the <code>run_nl</code> functions (cleanup.csv, cleanup.xml, cleanup.bat function parameters).</p>
-<p>On unix systems, it can happen that system processes delete files in the default temporary files folder. Thus, we recommend to reassign the temporary files folder for the R-session to another folder. The R-package <a href="https://www.rforge.net/unixtools/">unixtools</a> provides a function to reassign the temporary files folder for the current R-session:</p>
+<p>nlrx uses temporary files to store experiment xml files, commandline
+batch files to start NetLogo simulations and csv output files. These
+temporary files are stored in the default temporary files directory of
+the R session. By default, these files are deleted after each simulation
+run. However, if it is needed to look at this files, automatic deletion
+of temporary files can be disabled by setting the corresponding cleanup
+parameters in the <code>run_nl</code> functions (cleanup.csv,
+cleanup.xml, cleanup.bat function parameters).</p>
+<p>On unix systems, it can happen that system processes delete files in
+the default temporary files folder. Thus, we recommend to reassign the
+temporary files folder for the R-session to another folder. The
+R-package <a href="https://www.rforge.net/unixtools/">unixtools</a>
+provides a function to reassign the temporary files folder for the
+current R-session:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;unixtools&#39;</span>, <span class="at">repos =</span> <span class="st">&#39;http://www.rforge.net/&#39;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>unixtools<span class="sc">::</span><span class="fu">set.tempdir</span>(<span class="st">&quot;&lt;path-to-temp-dir&gt;&quot;</span>)</span></code></pre></div>
 </div>
 <div id="random-seed-and-repetitions-management" class="section level2">
 <h2>random-seed and repetitions management</h2>
-<p>The experiment provides a slot called “repetition” which allows to run multiple simulations of one parameterization. This is only useful if you manually generate a new random-seed during the setup of your model. By default, the NetLogo random-seed is set by the simdesign that is attached to your nl object. If your model does not reset the random seed manually, the seed will always be the same for each repetition.</p>
-<p>However, the concept of nlrx is based on sensitivity analyses. Here, you may want to exclude stochasticity from your output and instead do multiple sensitivity analyses with the same parameter matrix but different random seeds. You can then observe the effect of stochasticity on the level of your final output, the sensitivity indices. Thus we suggest to set the experiment repetition to 1 and instead use the nseeds variable of the desired simdesign to run multiple simulations with different random seeds.</p>
-<p>In summary, if you set the random-seed of your NetLogo model manually, you can increase the repitition of the experiment to run several simulations with equal parameterization and different random seeds. Otherwise, set the experiment repetition to 1 and increase the nseeds variable of your desired simdesign.</p>
+<p>The experiment provides a slot called “repetition” which allows to
+run multiple simulations of one parameterization. This is only useful if
+you manually generate a new random-seed during the setup of your model.
+By default, the NetLogo random-seed is set by the simdesign that is
+attached to your nl object. If your model does not reset the random seed
+manually, the seed will always be the same for each repetition.</p>
+<p>However, the concept of nlrx is based on sensitivity analyses. Here,
+you may want to exclude stochasticity from your output and instead do
+multiple sensitivity analyses with the same parameter matrix but
+different random seeds. You can then observe the effect of stochasticity
+on the level of your final output, the sensitivity indices. Thus we
+suggest to set the experiment repetition to 1 and instead use the nseeds
+variable of the desired simdesign to run multiple simulations with
+different random seeds.</p>
+<p>In summary, if you set the random-seed of your NetLogo model
+manually, you can increase the repitition of the experiment to run
+several simulations with equal parameterization and different random
+seeds. Otherwise, set the experiment repetition to 1 and increase the
+nseeds variable of your desired simdesign.</p>
 </div>
 <div id="runtime-and-measurements" class="section level2">
 <h2>Runtime and measurements</h2>
-<p>The runtime of NetLogo model simulations can be controlled with two slots of the experiment class:</p>
+<p>The runtime of NetLogo model simulations can be controlled with two
+slots of the experiment class:</p>
 <ul>
-<li>runtime - an integer that defines the maximum number of ticks that are simulated</li>
-<li>stopcond - a NetLogo reporter that reports true/false. Simulations are automatically stopped if TRUE is reported. Defaults to NA_character_ which means, no stop condition is applied.</li>
+<li>runtime - an integer that defines the maximum number of ticks that
+are simulated</li>
+<li>stopcond - a NetLogo reporter that reports true/false. Simulations
+are automatically stopped if TRUE is reported. Defaults to NA_character_
+which means, no stop condition is applied.</li>
 </ul>
-<p>Runtime can be set to 0 or NA_integer_ to allow for simulations without a pre-defined maximum runtime. However, this should only be done in combination with a proper stop condition (stopcond) or with NetLogo models that have a built-in stop condition. Otherwise, simulations might get stuck in endless loops.</p>
-<p>Two slots of the experiment class further define when measurements are taken:</p>
+<p>Runtime can be set to 0 or NA_integer_ to allow for simulations
+without a pre-defined maximum runtime. However, this should only be done
+in combination with a proper stop condition (stopcond) or with NetLogo
+models that have a built-in stop condition. Otherwise, simulations might
+get stuck in endless loops.</p>
+<p>Two slots of the experiment class further define when measurements
+are taken:</p>
 <ul>
-<li>tickmetrics - defines if measurements are taken at the end of the simulation (final tick) or on each tick</li>
-<li>evalticks - only applied when tickmetrics = “true”; defines a vector of ticks for which output metrics are reported. Set to NA_integer_ to report all collected output.</li>
+<li>tickmetrics - defines if measurements are taken at the end of the
+simulation (final tick) or on each tick</li>
+<li>evalticks - only applied when tickmetrics = “true”; defines a vector
+of ticks for which output metrics are reported. Set to NA_integer_ to
+report all collected output.</li>
 </ul>
-<p>Depending on the evalticks definition, it might happen, that a simulation stops before any output has been collected. In such cases, output is still reported but all metrics that could not be collected for any defined evalticks will be filled up with NA.</p>
-<p>Four slots of the experiment class further define which measurements are taken:</p>
+<p>Depending on the evalticks definition, it might happen, that a
+simulation stops before any output has been collected. In such cases,
+output is still reported but all metrics that could not be collected for
+any defined evalticks will be filled up with NA.</p>
+<p>Four slots of the experiment class further define which measurements
+are taken:</p>
 <ul>
-<li>metrics - vector of valid NetLogo reporters that are used to collect data (e.g. c(“count turtles”))</li>
-<li>metrics.turtles - a list with named vectors of strings defining valid turtles-own variables that are taken as output measurements (e.g. list(“turtles” = c(“who”, “pxcor”, “pycor”, “color”))</li>
-<li>metrics.patches - vector of valid patches-own variables that are used to collect patches data (e.g. c(“pxcor”, “pycor”, “pcolor”))</li>
-<li>metrics.links - a list with named vectors of strings defining valid links-own variables that are taken as output measurements (e.g. list(“links” = c(“[who] of end1”, “[who] of end2”)))</li>
+<li>metrics - vector of valid NetLogo reporters that are used to collect
+data (e.g. c(“count turtles”))</li>
+<li>metrics.turtles - a list with named vectors of strings defining
+valid turtles-own variables that are taken as output measurements
+(e.g. list(“turtles” = c(“who”, “pxcor”, “pycor”, “color”))</li>
+<li>metrics.patches - vector of valid patches-own variables that are
+used to collect patches data (e.g. c(“pxcor”, “pycor”, “pcolor”))</li>
+<li>metrics.links - a list with named vectors of strings defining valid
+links-own variables that are taken as output measurements
+(e.g. list(“links” = c(“[who] of end1”, “[who] of end2”)))</li>
 </ul>
-<p>Although the metrics slot accepts any valid NetLogo reporter, such as “count patches”, reporter strings can become quite long and confusing. We suggest to create NetLogo reporter procedures for complex reporters in order to get a nice and clean results data frame. For example, the NetLogo reporter “count patches with [pcolor = green]” could be written as a NetLogo reporter function:</p>
+<p>Although the metrics slot accepts any valid NetLogo reporter, such as
+“count patches”, reporter strings can become quite long and confusing.
+We suggest to create NetLogo reporter procedures for complex reporters
+in order to get a nice and clean results data frame. For example, the
+NetLogo reporter “count patches with [pcolor = green]” could be written
+as a NetLogo reporter function:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>to<span class="sc">-</span>report green.patches</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  report count patches with [pcolor <span class="ot">=</span> green]</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>end</span></code></pre></div>
-<p>In your nlrx experiment metrics field you can then enter “green.patches” which is way more intuitive then “count patches with [pcolor = green]”.</p>
+<p>In your nlrx experiment metrics field you can then enter
+“green.patches” which is way more intuitive then “count patches with
+[pcolor = green]”.</p>
 </div>
 <div id="netlogo-extensions" class="section level2">
 <h2>NetLogo extensions</h2>
-<p>Usually, all NetLogo extensions that are shipped with NetLogo should also work with nlrx. However, depending on the system it can happen that NetLogo extensions are not found properly. To solve such problems we advise to put your <code>.nlogo model</code> file in the <code>app/models</code> subdirectory of the NetLogo installation path. A special case is the NetLogo r-extension because it needs to be stopped manually in between model runs. To achieve that, simply put the <code>r:stop</code> command in the <code>idfinal</code> slot of your experiment: <code>idfinal = &quot;r:stop&quot;</code>.</p>
+<p>Usually, all NetLogo extensions that are shipped with NetLogo should
+also work with nlrx. However, depending on the system it can happen that
+NetLogo extensions are not found properly. To solve such problems we
+advise to put your <code>.nlogo model</code> file in the
+<code>app/models</code> subdirectory of the NetLogo installation path. A
+special case is the NetLogo r-extension because it needs to be stopped
+manually in between model runs. To achieve that, simply put the
+<code>r:stop</code> command in the <code>idfinal</code> slot of your
+experiment: <code>idfinal = &quot;r:stop&quot;</code>.</p>
 </div>
 <div id="parallelisation-and-the-future-concept" class="section level2">
 <h2>Parallelisation and the future concept</h2>
-<p>The run_nl_all function uses the <code>future_map_dfr()</code> function from the <a href="https://github.com/DavisVaughan/furrr">furrr package</a>. The simulations are executed in a nested loop where the outer loop iterates over the random seeds of your simdesign, and the inner loop iterates over the rows of the siminput parameter matrix of your simdesign. These loops can be executed in parallel by setting up an appropriate plan from the <a href="https://github.com/HenrikBengtsson/future">future package</a>. See examples below for more details on parallelisation on local machines and remote HPC clusters.</p>
+<p>The run_nl_all function uses the <code>future_map_dfr()</code>
+function from the <a href="https://github.com/DavisVaughan/furrr">furrr
+package</a>. The simulations are executed in a nested loop where the
+outer loop iterates over the random seeds of your simdesign, and the
+inner loop iterates over the rows of the siminput parameter matrix of
+your simdesign. These loops can be executed in parallel by setting up an
+appropriate plan from the <a href="https://github.com/HenrikBengtsson/future">future package</a>. See
+examples below for more details on parallelisation on local machines and
+remote HPC clusters.</p>
 <div id="parallelisation-on-local-machine" class="section level3">
 <h3>Parallelisation on local machine</h3>
-<p>Model simulations can be distributed to each logical processor on the local machine in parallel. The future package provides two options for parallelization, explicit futures and implicit futures which are executed in the background and do not block the console while running.</p>
+<p>Model simulations can be distributed to each logical processor on the
+local machine in parallel. The future package provides two options for
+parallelization, explicit futures and implicit futures which are
+executed in the background and do not block the console while
+running.</p>
 <p>Running parallel simulations with an explicit future command:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multiprocess)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_nl_all</span>(<span class="at">nl =</span> nl)</span></code></pre></div>
-<p>For running parallel simulations with an implicit future command we need to define the type of parallelisation for each level of the nested <code>furrr::future_map_dfr()</code> function individually. Because we want to parallelize the actual simulations, we need to use the multiprocess plan on the inner level. Note, that we use the assignment operator for implicit futures (<code>%&lt;-%</code>):</p>
+<p>For running parallel simulations with an implicit future command we
+need to define the type of parallelisation for each level of the nested
+<code>furrr::future_map_dfr()</code> function individually. Because we
+want to parallelize the actual simulations, we need to use the
+multiprocess plan on the inner level. Note, that we use the assignment
+operator for implicit futures (<code>%&lt;-%</code>):</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(<span class="fu">list</span>(sequential, multiprocess))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&lt;-%</span> <span class="fu">run_nl_all</span>(<span class="at">nl =</span> nl)</span></code></pre></div>
-<p>In cases, where the number of random seeds is lower than the available processor cores, parallelisation may not be completely efficient. To allow efficient parallelisation, even for a small number of random seeds the split parameter of the <code>run_nl_all()</code> function can be used to split the parameter matrix into smaller chunks, which can be distributed to separate processor cores. For example, a simulation with 1000 runs (rows of the siminput matrix) and 2 random seeds should be distributed to 8 processor cores. By default, the parallelisation loop would consist of two jobs (one for each random seed) with 1000 simulation runs each. This experiment would only utilize 2 of the 8 available processor cores. By setting the split parameter to 4, we increase the total number of jobs from 2 to 8 (2 random-seeds * 4 parameter matrix chunks). Each job runs 1/4th of the parameter input matrix (250 rows) using one of the 2 defined random seeds.</p>
+<p>In cases, where the number of random seeds is lower than the
+available processor cores, parallelisation may not be completely
+efficient. To allow efficient parallelisation, even for a small number
+of random seeds the split parameter of the <code>run_nl_all()</code>
+function can be used to split the parameter matrix into smaller chunks,
+which can be distributed to separate processor cores. For example, a
+simulation with 1000 runs (rows of the siminput matrix) and 2 random
+seeds should be distributed to 8 processor cores. By default, the
+parallelisation loop would consist of two jobs (one for each random
+seed) with 1000 simulation runs each. This experiment would only utilize
+2 of the 8 available processor cores. By setting the split parameter to
+4, we increase the total number of jobs from 2 to 8 (2 random-seeds * 4
+parameter matrix chunks). Each job runs 1/4th of the parameter input
+matrix (250 rows) using one of the 2 defined random seeds.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_nl_all</span>(<span class="at">nl =</span> nl, <span class="at">split =</span> <span class="dv">4</span>)</span></code></pre></div>
 </div>
 <div id="parallelisation-on-remote-hpc-cluster" class="section level3">
 <h3>Parallelisation on remote HPC cluster</h3>
-<p>This option requires access to a remote HPC cluster. This example gives you some guidance and examples for sending jobs from an R session on your local machine to an HPC running slurm. Details might be different depending on the HPC setup.</p>
-<p>Some settings, such as ssh access and slurm templates need to be defined to access remote HPC clusters from your local R session. Please check out this <a href="https://r-spatialecology.github.io/gwdg_hpc_guide/">detailed HPC setup manual</a> for examples on required settings for an HPC running slurm.</p>
-<p>In order to run NetLogo models on remote HPCs, required software needs to be installed on the remote system as well: java, Netlogo, R, nlrx and further required R-packages (future/clusterMQ, …). Of course the NetLogo model files need to be available on the remote machine as well.</p>
+<p>This option requires access to a remote HPC cluster. This example
+gives you some guidance and examples for sending jobs from an R session
+on your local machine to an HPC running slurm. Details might be
+different depending on the HPC setup.</p>
+<p>Some settings, such as ssh access and slurm templates need to be
+defined to access remote HPC clusters from your local R session. Please
+check out this <a href="https://r-spatialecology.github.io/gwdg_hpc_guide/">detailed HPC
+setup manual</a> for examples on required settings for an HPC running
+slurm.</p>
+<p>In order to run NetLogo models on remote HPCs, required software
+needs to be installed on the remote system as well: java, Netlogo, R,
+nlrx and further required R-packages (future/clusterMQ, …). Of course
+the NetLogo model files need to be available on the remote machine as
+well.</p>
 <div id="using-the-future-framework" class="section level4">
 <h4>Using the future framework</h4>
-<p>For sending jobs to the remote HPC under the future framework, we need to install and load additional R packages and adjust the future plan before executing <code>run_nl_all()</code>. You need to define a path to your ssh key, a server adress for the HPC, a user name for the HPC and a path to the slurm template file on the HPC. Please also make sure that the <code>nlpath</code>, <code>modelpath</code> and <code>outpath</code> variables within your nl object point to locations on the filesystem of the HPC and not your local filesystem.</p>
+<p>For sending jobs to the remote HPC under the future framework, we
+need to install and load additional R packages and adjust the future
+plan before executing <code>run_nl_all()</code>. You need to define a
+path to your ssh key, a server address for the HPC, a user name for the
+HPC and a path to the slurm template file on the HPC. Please also make
+sure that the <code>nlpath</code>, <code>modelpath</code> and
+<code>outpath</code> variables within your nl object point to locations
+on the filesystem of the HPC and not your local filesystem.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future.batchtools)</span>
@@ -365,8 +785,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="using-the-clustermq-framework" class="section level4">
 <h4>Using the clusterMQ framework</h4>
-<p>The clusterMQ framework is somewhat different from the future framework. However, in our experience it worked more reliable in combination with a slurm HPC. For installation of clustermq and .Rprofile settings see also the <a href="https://r-spatialecology.github.io/gwdg_hpc_guide/">detailed HPC setup manual</a>.</p>
-<p>clusterMQ does not directly support parallelisation of the nested <code>furrr::future_map_dfr()</code> loops of the <code>run_nl_all()</code> function. We need to define our own parallel simulation function, using the <code>run_nl_one()</code> function of the nlrx package:</p>
+<p>The clusterMQ framework is somewhat different from the future
+framework. However, in our experience it worked more reliable in
+combination with a slurm HPC. For installation of clustermq and
+.Rprofile settings see also the <a href="https://r-spatialecology.github.io/gwdg_hpc_guide/">detailed HPC
+setup manual</a>.</p>
+<p>clusterMQ does not directly support parallelisation of the nested
+<code>furrr::future_map_dfr()</code> loops of the
+<code>run_nl_all()</code> function. We need to define our own parallel
+simulation function, using the <code>run_nl_one()</code> function of the
+nlrx package:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clustermq)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First, we set the total number of jobs for the HPC</span></span>

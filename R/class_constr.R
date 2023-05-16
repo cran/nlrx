@@ -54,8 +54,8 @@ nl <- function(nlversion = "6.0.2",
 
   methods::new("nl",
                nlversion = nlversion,
-               nlpath = nlpath,
-               modelpath = modelpath,
+               nlpath = path.expand(nlpath),
+               modelpath = path.expand(modelpath),
                jvmmem = jvmmem,
                experiment = methods::new("experiment"),
                simdesign = methods::new("simdesign"),
@@ -180,8 +180,8 @@ nl <- function(nlversion = "6.0.2",
 #' The metrics.turtles slot accepts a list with named vectors of valid turtle breed metrics.
 #' Each name of a vector in this list defines a specified breed of the NetLogo model, whereas the vector defines the variables that are measured for this breed.
 #' For example metrics.turtles = list("sheep"=c("color"), "wolves"=c("who")) - would measure the color of each sheep and the who number of each wolf agent.
-#' To measure <turtles-own> variables for all turtles, use "turtles" = c(...).
-#' Be aware, that NetLogo will produce runtime errors if you measure <breed-own> variables for agents that do not belong to this breed.
+#' To measure turtles-own variables for all turtles, use "turtles" = c(...).
+#' Be aware, that NetLogo will produce runtime errors if you measure breed-own variables for agents that do not belong to this breed.
 #' Please note that NetLogo models may contain a huge number of turtles and output measurements of agent variables on each tick may need a lot of ressources.
 #'
 #' \emph{metrics.links}
@@ -189,8 +189,8 @@ nl <- function(nlversion = "6.0.2",
 #' The metrics.links slot accepts a list with named vectors of valid link breed metrics.
 #' Each name of a vector in this list defines a specified link breed of the NetLogo model, whereas the vector defines the variables that are measured for this link breed.
 #' For example metrics.links = list("linktype-a"=c("end1"), "linktype-b"=c("end2")) - would measure the start agent of each linktype-a link and the end agent of each linktype-b link.
-#' To measure <links-own> variables for all links, use "links" = c(...).
-#' Be aware, that NetLogo will produce runtime errors if you measure <link-breed-own> variables for agents that do not belong to this breed.
+#' To measure links-own variables for all links, use "links" = c(...).
+#' Be aware, that NetLogo will produce runtime errors if you measure link-breed-own variables for agents that do not belong to this breed.
 #' Please note that NetLogo models may contain a huge number of turtles and output measurements of agent variables on each tick may need a lot of ressources.
 #'
 #'
@@ -259,7 +259,7 @@ experiment <- function(expname = "defaultexp",
 
   methods::new("experiment",
                expname=expname,
-               outpath=outpath,
+               outpath=path.expand(outpath),
                repetition=repetition,
                tickmetrics=tickmetrics,
                idsetup=idsetup,
@@ -330,7 +330,7 @@ experiment <- function(expname = "defaultexp",
 #'
 #' The latin hypercube simdesign creates a Latin Hypercube sampling parameter matrix.
 #' The method can be used to generate a near-random sample of parameter values from the defined parameter distributions.
-#' More Details on Latin Hypercube Sampling can be found in [McKay 1979](https://www.tandfonline.com/doi/abs/10.1080/00401706.1979.10489755).
+#' More Details on Latin Hypercube Sampling can be found in McKay (1979) \doi{10.1080/00401706.1979.10489755}.
 #' nlrx uses the [lhs](https://CRAN.R-project.org/package=lhs/index.html) package to generate the Latin Hypercube parameter matrix.
 #' To setup a latin hypercube sampling simdesign, variable distributions need to be defined (min, max, qfun).
 #'
