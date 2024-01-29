@@ -2,7 +2,7 @@ Package: nlrx
 Type: Package
 Title: Setup, Run and Analyze 'NetLogo' Model Simulations from 'R' via
         'XML'
-Version: 0.4.4
+Version: 0.4.5
 Authors@R: c(person("Jan", "Salecker", email = "jan.salecker@posteo.de",
                      role = c("aut"), comment = c(ORCID = '0000-0002-9000-4229')),
              person("Marco", "Sciaini", email = "sciaini.marco@gmail.com", 
@@ -34,7 +34,7 @@ VignetteBuilder: knitr
 SystemRequirements: NetLogo (>= 5.3.1), Java (>= 11), pandoc, OpenSSL,
         udunits-2, PROJ.4, GEOS, GDAL, libxml2
 NeedsCompilation: no
-Packaged: 2023-05-16 14:17:33 UTC; jan
+Packaged: 2024-01-29 19:00:08 UTC; jan
 Author: Jan Salecker [aut] (<https://orcid.org/0000-0002-9000-4229>),
   Marco Sciaini [aut] (<https://orcid.org/0000-0002-3042-5435>),
   Marina Papadopoulou [rev] (Marina reviewed the package for ropensci,
@@ -42,4 +42,4 @@ Author: Jan Salecker [aut] (<https://orcid.org/0000-0002-9000-4229>),
   Sebastian Hanss [cre] (Package maintainer together with Jan Salecker)
 Maintainer: Sebastian Hanss <nlrx@mailbox.org>
 Repository: CRAN
-Date/Publication: 2023-05-16 14:40:02 UTC
+Date/Publication: 2024-01-29 19:20:02 UTC
