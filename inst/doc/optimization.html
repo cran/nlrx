@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jan Salecker" />
 
-<meta name="date" content="2024-01-29" />
+<meta name="date" content="2025-11-25" />
 
 <title>Optimization</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Optimization</h1>
 <h4 class="author">Jan Salecker</h4>
-<h4 class="date">2024-01-29</h4>
+<h4 class="date">2025-11-25</h4>
 
 
 
@@ -362,20 +362,20 @@ landscape metrics that are then used as fitness criterion.</p>
 <h2>Example 1: NetLogo reporter as fitness criterion</h2>
 <div id="step-1-create-a-nl-object" class="section level4">
 <h4>Step 1: Create a nl object:</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlrx)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows default NetLogo installation path (adjust to your needs!):</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/Program Files/NetLogo 6.0.3&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/out&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Unix default NetLogo installation path (adjust to your needs!):</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/NetLogo 6.0.3&quot;</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/out&quot;</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>nl <span class="ot">&lt;-</span> <span class="fu">nl</span>(<span class="at">nlversion =</span> <span class="st">&quot;6.0.3&quot;</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">nlpath =</span> netlogopath,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">modelpath =</span> modelpath,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">jvmmem =</span> <span class="dv">1024</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(nlrx)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># Windows default NetLogo installation path (adjust to your needs!):</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/Program Files/NetLogo 6.0.3&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/out&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># Unix default NetLogo installation path (adjust to your needs!):</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/NetLogo 6.0.3&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/out&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>nl <span class="ot">&lt;-</span> <span class="fu">nl</span>(<span class="at">nlversion =</span> <span class="st">&quot;6.0.3&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>         <span class="at">nlpath =</span> netlogopath,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>         <span class="at">modelpath =</span> modelpath,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>         <span class="at">jvmmem =</span> <span class="dv">1024</span>)</span></code></pre></div>
 </div>
 <div id="step-2-attach-an-experiment" class="section level4">
 <h4>Step 2: Attach an experiment</h4>
@@ -395,23 +395,23 @@ than one tick would be measured, the algorithm automatically calculates
 the mean value of the selected reporter. If you wish to apply other
 functions to aggregate temporal information into one value, you can use
 a self-defined evaluation function (see Example 2).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nl<span class="sc">@</span>experiment <span class="ot">&lt;-</span> <span class="fu">experiment</span>(<span class="at">expname=</span><span class="st">&quot;wolf-sheep-GenSA1&quot;</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">outpath=</span>outpath,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">repetition=</span><span class="dv">1</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">tickmetrics=</span><span class="st">&quot;false&quot;</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">idsetup=</span><span class="st">&quot;setup&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">idgo=</span><span class="st">&quot;go&quot;</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">runtime=</span><span class="dv">50</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">metrics=</span><span class="fu">c</span>(<span class="st">&quot;(1 / count wolves)&quot;</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">variables =</span> <span class="fu">list</span>(<span class="st">&#39;initial-number-sheep&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>, <span class="at">qfun=</span><span class="st">&quot;qunif&quot;</span>),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&#39;initial-number-wolves&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>, <span class="at">qfun=</span><span class="st">&quot;qunif&quot;</span>)),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">constants =</span> <span class="fu">list</span>(<span class="st">&quot;model-version&quot;</span> <span class="ot">=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">sheep-wolves-grass</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;grass-regrowth-time&quot;</span> <span class="ot">=</span> <span class="dv">30</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;sheep-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;wolf-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">20</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;sheep-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;wolf-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">5</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;show-energy?&quot;</span> <span class="ot">=</span> <span class="st">&quot;false&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>nl<span class="sc">@</span>experiment <span class="ot">&lt;-</span> <span class="fu">experiment</span>(<span class="at">expname=</span><span class="st">&quot;wolf-sheep-GenSA1&quot;</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                            <span class="at">outpath=</span>outpath,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                            <span class="at">repetition=</span><span class="dv">1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                            <span class="at">tickmetrics=</span><span class="st">&quot;false&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>                            <span class="at">idsetup=</span><span class="st">&quot;setup&quot;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>                            <span class="at">idgo=</span><span class="st">&quot;go&quot;</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>                            <span class="at">runtime=</span><span class="dv">50</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>                            <span class="at">metrics=</span><span class="fu">c</span>(<span class="st">&quot;(1 / count wolves)&quot;</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>                            <span class="at">variables =</span> <span class="fu">list</span>(<span class="st">&#39;initial-number-sheep&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>, <span class="at">qfun=</span><span class="st">&quot;qunif&quot;</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>                                             <span class="st">&#39;initial-number-wolves&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>, <span class="at">qfun=</span><span class="st">&quot;qunif&quot;</span>)),</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>                            <span class="at">constants =</span> <span class="fu">list</span>(<span class="st">&quot;model-version&quot;</span> <span class="ot">=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">sheep-wolves-grass</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>                                             <span class="st">&quot;grass-regrowth-time&quot;</span> <span class="ot">=</span> <span class="dv">30</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>                                             <span class="st">&quot;sheep-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>                                             <span class="st">&quot;wolf-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">20</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>                                             <span class="st">&quot;sheep-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>                                             <span class="st">&quot;wolf-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">5</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>                                             <span class="st">&quot;show-energy?&quot;</span> <span class="ot">=</span> <span class="st">&quot;false&quot;</span>))</span></code></pre></div>
 </div>
 <div id="step-3-attach-a-simulation-design" class="section level4">
 <h4>Step 3: Attach a simulation design</h4>
@@ -424,10 +424,10 @@ evalcrit to use the first reporter (<code>evalcrit = 1</code>). The
 control parameter allows us to provide additional parameters for the
 GenSA function (see ?GenSA for details). For demonstration purposes, we
 set the maximum number of iterations to 20.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nl<span class="sc">@</span>simdesign <span class="ot">&lt;-</span> <span class="fu">simdesign_GenSA</span>(nl, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">evalcrit =</span> <span class="dv">1</span>, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">nseeds =</span> <span class="dv">1</span>, </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">20</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>nl<span class="sc">@</span>simdesign <span class="ot">&lt;-</span> <span class="fu">simdesign_GenSA</span>(nl, </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                                <span class="at">evalcrit =</span> <span class="dv">1</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                                <span class="at">nseeds =</span> <span class="dv">1</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">20</span>))</span></code></pre></div>
 </div>
 <div id="step-4-run-simulations" class="section level4">
 <h4>Step 4: Run simulations</h4>
@@ -449,7 +449,7 @@ package and is only relevant for storing results together with the nl
 object. This design decision was made in order to allow application of
 the method specific summary functions to the results of the
 optimization.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_nl_dyn</span>(nl, <span class="at">seed =</span> nl<span class="sc">@</span>simdesign<span class="sc">@</span>simseeds[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_nl_dyn</span>(nl, <span class="at">seed =</span> nl<span class="sc">@</span>simdesign<span class="sc">@</span>simseeds[<span class="dv">1</span>])</span></code></pre></div>
 </div>
 <div id="step-5-investigate-output" class="section level4">
 <h4>Step 5: Investigate output</h4>
@@ -461,32 +461,32 @@ experiment of the nl object. <code>trace.mat</code> gives you detailed
 information on the optimization process over all iterations.
 <code>counts</code> indicates how often the optimization procedure was
 executed in total.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>results</span></code></pre></div>
 <p>In order to store our results together with the nl object we need to
 attach the results to the nl object first. As explained above, we need
 to enframe the results as a tibble.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setsim</span>(nl, <span class="st">&quot;simoutput&quot;</span>) <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">enframe</span>(results)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(nl, <span class="fu">file.path</span>(nl<span class="sc">@</span>experiment<span class="sc">@</span>outpath, <span class="st">&quot;genSA_1.rds&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">setsim</span>(nl, <span class="st">&quot;simoutput&quot;</span>) <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">enframe</span>(results)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">saveRDS</span>(nl, <span class="fu">file.path</span>(nl<span class="sc">@</span>experiment<span class="sc">@</span>outpath, <span class="st">&quot;genSA_1.rds&quot;</span>))</span></code></pre></div>
 </div>
 </div>
 <div id="example-2-evaluation-function-as-fitness-criterion" class="section level2">
 <h2>Example 2: Evaluation function as fitness criterion</h2>
 <div id="step-1-create-a-nl-object-1" class="section level4">
 <h4>Step 1: Create a nl object:</h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlrx)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows default NetLogo installation path (adjust to your needs!):</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/Program Files/NetLogo 6.0.3&quot;</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/out&quot;</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Unix default NetLogo installation path (adjust to your needs!):</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/NetLogo 6.0.3&quot;</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/out&quot;</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>nl <span class="ot">&lt;-</span> <span class="fu">nl</span>(<span class="at">nlversion =</span> <span class="st">&quot;6.0.3&quot;</span>,</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">nlpath =</span> netlogopath,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">modelpath =</span> modelpath,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">jvmmem =</span> <span class="dv">1024</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(nlrx)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># Windows default NetLogo installation path (adjust to your needs!):</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/Program Files/NetLogo 6.0.3&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;C:/out&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># Unix default NetLogo installation path (adjust to your needs!):</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>netlogopath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/NetLogo 6.0.3&quot;</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>modelpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(netlogopath, <span class="st">&quot;app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo&quot;</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>outpath <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;/home/out&quot;</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>nl <span class="ot">&lt;-</span> <span class="fu">nl</span>(<span class="at">nlversion =</span> <span class="st">&quot;6.0.3&quot;</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>         <span class="at">nlpath =</span> netlogopath,</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>         <span class="at">modelpath =</span> modelpath,</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>         <span class="at">jvmmem =</span> <span class="dv">1024</span>)</span></code></pre></div>
 </div>
 <div id="step-2-attach-an-experiment-1" class="section level4">
 <h4>Step 2: Attach an experiment</h4>
@@ -501,23 +501,23 @@ calculate the landscape edge density index of the final tick and find a
 parameterization that leads to the edge density. Because we only want to
 consider the last tick of the simulation, we set tickmetrics to “false”
 and runtime to 50.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nl<span class="sc">@</span>experiment <span class="ot">&lt;-</span> <span class="fu">experiment</span>(<span class="at">expname=</span><span class="st">&quot;wolf-sheep-GenSA2&quot;</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">outpath=</span>outpath,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">repetition=</span><span class="dv">1</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">tickmetrics=</span><span class="st">&quot;false&quot;</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">idsetup=</span><span class="st">&quot;setup&quot;</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">idgo=</span><span class="st">&quot;go&quot;</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">runtime=</span><span class="dv">50</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">metrics.patches =</span> <span class="fu">c</span>(<span class="st">&quot;pxcor&quot;</span>, <span class="st">&quot;pycor&quot;</span>, <span class="st">&quot;pcolor&quot;</span>),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">variables =</span> <span class="fu">list</span>(<span class="st">&#39;initial-number-sheep&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>),</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&#39;initial-number-wolves&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>)),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">constants =</span> <span class="fu">list</span>(<span class="st">&quot;model-version&quot;</span> <span class="ot">=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">sheep-wolves-grass</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;grass-regrowth-time&quot;</span> <span class="ot">=</span> <span class="dv">30</span>,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;sheep-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;wolf-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">20</span>,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;sheep-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;wolf-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">5</span>,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">&quot;show-energy?&quot;</span> <span class="ot">=</span> <span class="st">&quot;false&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>nl<span class="sc">@</span>experiment <span class="ot">&lt;-</span> <span class="fu">experiment</span>(<span class="at">expname=</span><span class="st">&quot;wolf-sheep-GenSA2&quot;</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                            <span class="at">outpath=</span>outpath,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                            <span class="at">repetition=</span><span class="dv">1</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                            <span class="at">tickmetrics=</span><span class="st">&quot;false&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                            <span class="at">idsetup=</span><span class="st">&quot;setup&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>                            <span class="at">idgo=</span><span class="st">&quot;go&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>                            <span class="at">runtime=</span><span class="dv">50</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>                            <span class="at">metrics.patches =</span> <span class="fu">c</span>(<span class="st">&quot;pxcor&quot;</span>, <span class="st">&quot;pycor&quot;</span>, <span class="st">&quot;pcolor&quot;</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>                            <span class="at">variables =</span> <span class="fu">list</span>(<span class="st">&#39;initial-number-sheep&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>                                             <span class="st">&#39;initial-number-wolves&#39;</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">min=</span><span class="dv">50</span>, <span class="at">max=</span><span class="dv">150</span>)),</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>                            <span class="at">constants =</span> <span class="fu">list</span>(<span class="st">&quot;model-version&quot;</span> <span class="ot">=</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">sheep-wolves-grass</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>                                             <span class="st">&quot;grass-regrowth-time&quot;</span> <span class="ot">=</span> <span class="dv">30</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>                                             <span class="st">&quot;sheep-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>                                             <span class="st">&quot;wolf-gain-from-food&quot;</span> <span class="ot">=</span> <span class="dv">20</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>                                             <span class="st">&quot;sheep-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>                                             <span class="st">&quot;wolf-reproduce&quot;</span> <span class="ot">=</span> <span class="dv">5</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>                                             <span class="st">&quot;show-energy?&quot;</span> <span class="ot">=</span> <span class="st">&quot;false&quot;</span>))</span></code></pre></div>
 </div>
 <div id="step-3-attach-a-simulation-design-1" class="section level4">
 <h4>Step 3: Attach a simulation design</h4>
@@ -529,24 +529,24 @@ return a single numeric value. First we load the package
 landscapemetrics. We then convert the spatial data to a raster format
 and calculate the landscape edge density index. Finally, we report only
 the index value of the resulting tibble.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>critfun <span class="ot">&lt;-</span> <span class="cf">function</span>(nl) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(landscapemetrics)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  res_spat <span class="ot">&lt;-</span> <span class="fu">nl_to_raster</span>(nl)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  res_spat_raster <span class="ot">&lt;-</span> res_spat<span class="sc">$</span>spatial.raster[[<span class="dv">1</span>]]</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  lsm <span class="ot">&lt;-</span> <span class="fu">lsm_l_ed</span>(res_spat_raster)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  crit <span class="ot">&lt;-</span> lsm<span class="sc">$</span>value</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(crit)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>critfun <span class="ot">&lt;-</span> <span class="cf">function</span>(nl) {</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">library</span>(landscapemetrics)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  res_spat <span class="ot">&lt;-</span> <span class="fu">nl_to_raster</span>(nl)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  res_spat_raster <span class="ot">&lt;-</span> res_spat<span class="sc">$</span>spatial.raster[[<span class="dv">1</span>]]</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  lsm <span class="ot">&lt;-</span> <span class="fu">lsm_l_ed</span>(res_spat_raster)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  crit <span class="ot">&lt;-</span> lsm<span class="sc">$</span>value</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="fu">return</span>(crit)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>}</span></code></pre></div>
 <p>In the <code>simdesign_GenSA()</code> function we now provide our
 evaluation function (<code>critfun</code>) as evaluation criterion
 (<code>evalcrit</code>). The control parameter allows us to provide
 additional parameters for the GenSA function (see ?GenSA for details).
 For demonstration purposes, we set the maximum number of iterations to
 20.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nl<span class="sc">@</span>simdesign <span class="ot">&lt;-</span> <span class="fu">simdesign_GenSA</span>(nl, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">evalcrit =</span> critfun, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">nseeds =</span> <span class="dv">1</span>, </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">20</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>nl<span class="sc">@</span>simdesign <span class="ot">&lt;-</span> <span class="fu">simdesign_GenSA</span>(nl, </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>                                <span class="at">evalcrit =</span> critfun, </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                                <span class="at">nseeds =</span> <span class="dv">1</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">maxit =</span> <span class="dv">20</span>))</span></code></pre></div>
 </div>
 <div id="step-4-run-simulations-1" class="section level4">
 <h4>Step 4: Run simulations</h4>
@@ -568,7 +568,7 @@ package and is only relevant for storing results together with the nl
 object. This design decision was made in order to allow application of
 the method specific summary functions to the results of the
 optimization.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_nl_dyn</span>(nl, <span class="at">seed =</span> nl<span class="sc">@</span>simdesign<span class="sc">@</span>simseeds[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">run_nl_dyn</span>(nl, <span class="at">seed =</span> nl<span class="sc">@</span>simdesign<span class="sc">@</span>simseeds[<span class="dv">1</span>])</span></code></pre></div>
 </div>
 <div id="step-5-investigate-output-1" class="section level4">
 <h4>Step 5: Investigate output</h4>
@@ -580,12 +580,12 @@ experiment of the nl object. <code>trace.mat</code> gives you detailed
 information on the optimization process over all iterations.
 <code>counts</code> indicates how often the optimization procedure was
 executed in total.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>results</span></code></pre></div>
 <p>In order to store our results together with the nl object we need to
 attach the results to the nl object first. As explained above, we need
 to enframe the results as a tibble.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setsim</span>(nl, <span class="st">&quot;simoutput&quot;</span>) <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">enframe</span>(results)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(nl, <span class="fu">file.path</span>(nl<span class="sc">@</span>experiment<span class="sc">@</span>outpath, <span class="st">&quot;genSA_2.rds&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">setsim</span>(nl, <span class="st">&quot;simoutput&quot;</span>) <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">enframe</span>(results)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">saveRDS</span>(nl, <span class="fu">file.path</span>(nl<span class="sc">@</span>experiment<span class="sc">@</span>outpath, <span class="st">&quot;genSA_2.rds&quot;</span>))</span></code></pre></div>
 </div>
 </div>
 
